@@ -999,121 +999,110 @@
 		window.irParaPagamento = async () => {
     if (!currentUser) return alert("Faça login primeiro!");
 
-    // 1. SALVA O USUÁRIO NO LOCALSTORAGE (Crucial para a ponte no GitHub)
-    // Isso garante que, quando o usuário voltar, o sistema saiba quem ele é.
-    localStorage.setItem('usuario_que_pagou', currentUser);
+    // 1. Avisa o usuário o que vai acontecer
+    alert("Vou abrir o pagamento em outra aba.\n\nQuando terminar, VOLTE AQUI e clique em 'JÁ PAGUEI' para liberar seu acesso.");
 
-    // 2. Avisa o usuário e explica o fluxo
-    alert("Vou abrir o pagamento em outra aba.\n\nQuando terminar, clique em 'Voltar para a loja' para ativar seu Premium automaticamente!");
-
-    // 3. Abre o PagSeguro (A URL de redirecionamento no painel deve ser a do seu GitHub)
+    // 2. Abre o PagSeguro em OUTRA aba (para não fechar seu app)
     window.open("https://pagamento.pagbank.com.br/pagamento?code=de927a34-795b-476b-8b0d-197f5ae22424&t=ce388e3a-12b0-431b-a106-6f44295a09a7", "_blank");
 
-    // 4. Exibe o "Botão de Emergência" caso o redirecionamento automático falhe
+    // 3. Cria um botão de "Já Paguei" temporário na tela (ou exibe um modal)
+    // Aqui estou improvisando um botão simples usando o toast, mas você pode criar um modal bonito
     const toast = document.getElementById('toast');
     toast.innerHTML = `
-        <div style="display:flex; flex-direction:column; gap:10px; padding:10px; background:rgba(0,0,0,0.9); border-radius:10px; border:1px solid #E91E63;">
-            <span style="color:#fff; font-size:14px;">Já finalizou o pagamento?</span>
-            <button onclick="verificarPagamentoManual()" style="background:#E91E63; color:#fff; border:none; padding:8px; border-radius:5px; font-weight:bold; cursor:pointer;">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+            <span>Já finalizou o pagamento?</span>
+            <button onclick="verificarPagamentoManual()" style="background:#fff; color:#000; border:none; padding:5px; border-radius:5px; font-weight:bold; cursor:pointer;">
                 SIM, LIBERAR MEU ACESSO
             </button>
         </div>
     `;
     toast.className = "show";
+    // Mantém o toast na tela para sempre até ele clicar
     toast.style.visibility = "visible"; 
     toast.style.opacity = "1";
-    toast.style.bottom = "20px"; // Ajustado para não cobrir o centro todo
+    toast.style.bottom = "50%"; // Coloca no meio da tela para chamar atenção
 };
 
-// Função de verificação manual aprimorada
-window.verificarPagamentoManual = async () => {
-    const code = prompt("Cole aqui o Código da Transação (enviado no seu e-mail pelo PagSeguro):");
+// Nova função para checar manualmente sem depender da URL
+window.verificarPagamentoManual = () => {
+    const code = prompt("O PagSeguro te enviou um código de transação no e-mail? Se sim, cole aqui. Se não, deixe em branco e vou tentar achar seu pagamento pelo seu nome.");
     
-    if(!code || code.length < 5) {
-        alert("Para liberação manual, preciso do código da transação. Caso não encontre, chame nosso suporte.");
-        return;
-    }
-
     document.getElementById('global-loader').style.display = 'flex';
     
-    try {
-        const { ref, get, update } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+    // Se o cliente colar o código, é instantâneo
+    if(code && code.length > 10) {
         const paymentRef = ref(db, 'pagamentos_confirmados/' + code.trim());
-        
-        const snapshot = await get(paymentRef);
-        
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            
-            // Verifica se o pagamento está aprovado e se já não tem outro dono
-            if (data.confirmado === true) {
-                if (data.usuario_dono && data.usuario_dono !== currentUser) {
-                    alert("Este código já foi resgatado por outro usuário.");
-                } else {
-                    // Vincula o usuário ao pagamento e ativa
-                    await update(ref(db, 'users/' + currentUser), { isPremium: true });
-                    await update(paymentRef, { 
-                        usuario_dono: currentUser,
-                        data_ativacao: new Date().toISOString()
-                    });
-                    
-                    alert("🎉 PREMIUM ATIVADO COM SUCESSO!");
-                    location.reload();
-                }
+        get(paymentRef).then((snapshot) => {
+            if (snapshot.exists() && snapshot.val().confirmado) {
+                window.ativarPremiumUsuario();
             } else {
-                alert("O pagamento consta no sistema, mas ainda não foi aprovado pelo PagSeguro. Aguarde alguns instantes.");
+                alert("Pagamento ainda não processado pelo banco. Tente novamente em 1 minuto.");
+                document.getElementById('global-loader').style.display = 'none';
             }
-        } else {
-            alert("Código não encontrado. Certifique-se de que o pagamento foi concluído ou aguarde 2 minutos para o sistema processar.");
-        }
-    } catch (e) {
-        console.error(e);
-        alert("Erro ao verificar. Tente novamente mais tarde.");
-    } finally {
+        });
+    } else {
+        // Se ele não tiver o código, você pode mandar ele pro suporte
         document.getElementById('global-loader').style.display = 'none';
+        alert("Não consegui identificar automaticamente. Por favor, envie o comprovante no WhatsApp do suporte (link no menu) que liberamos na hora!");
+        window.open("https://wa.me/SEU_NUMERO", "_blank");
     }
 };
 		
 
-        window.onload = async () => {
-    console.log("🚀 Site iniciado, verificando sistema...");
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const giftId = urlParams.get('id');
+            
+            // Pega o ID da transação se o cliente voltou do pagamento
+            const tid = urlParams.get('transaction_id') || urlParams.get('code'); 
+            
+            document.querySelectorAll('.view-section').forEach(el => el.style.display = 'none');
 
-    try {
-        // 1. Recuperar login do usuário (Sua lógica existente)
-        const savedUser = localStorage.getItem('currentUser');
-        if (savedUser) {
-            window.currentUser = savedUser;
-            console.log("👤 Usuário logado:", currentUser);
-            // Atualiza a interface para logado
-            if (window.updateAuthUI) window.updateAuthUI(true);
-        }
+            if(giftId) {
+                loadGift(giftId);
+            } else {
+                document.getElementById('global-loader').style.display = 'none';
+                
+                // Verifica se tem login salvo no navegador
+                const saved = localStorage.getItem('mem_admin'); 
+                
+                if(saved) {
+                    // CENÁRIO 1: USUÁRIO JÁ LOGADO
+                    const u = JSON.parse(saved);
+                    document.getElementById('l-user').value = u.user;
+                    document.getElementById('l-pass').value = u.pass;
+                    
+                    // Loga e já prepara o terreno para ativar
+                    window.handleLogin(); 
+                } else {
+                    // CENÁRIO 2: USUÁRIO DESLOGADO (MOSTRA LANDING PAGE)
+                    document.getElementById('view-landing').style.display = 'block';
+                    generateCaptcha();
 
-        // 2. VERIFICAÇÃO DE PAGAMENTO (O que o PagSeguro enviou)
-        const urlParams = new URLSearchParams(window.location.search);
-        const tid = urlParams.get('transaction_id') || urlParams.get('id_res') || urlParams.get('code');
+                    // Se tem ID de transação mas não tá logado, força o login
+                    if (tid) {
+                        setTimeout(() => {
+                            alert("✨ Pagamento Identificado! \n\nPor favor, FAÇA LOGIN ou CRIE SUA CONTA agora para ativarmos seu Premium automaticamente.");
+                            openLoginModal();
+                        }, 1000);
+                    }
+                }
 
-        if (tid && window.currentUser) {
-            console.log("💳 Transação detectada na URL:", tid);
-            // Chama a função que já criamos para validar no Firebase
-            if (window.checkPaymentReturn) {
-                await window.checkPaymentReturn();
+                // --- A MÁGICA: ATIVAÇÃO AUTOMÁTICA ---
+                // Se tiver o código (tid), esperamos o login acontecer e ativamos!
+                if (tid) {
+                    console.log("Fluxo de pagamento detectado para:", tid);
+                    // Espera 2.5 segundos para garantir que o 'currentUser' foi carregado pelo handleLogin
+                    setTimeout(() => {
+                        if(currentUser) {
+                            executarPublicacaoAutomatica(tid);
+                        } else {
+                            console.log("Usuário ainda não logou, aguardando...");
+                        }
+                    }, 2500); 
+                }
             }
-        }
-
-        // 3. FINALIZAÇÃO: Esconde o loader e mostra o site
-        const loader = document.getElementById('global-loader');
-        if (loader) {
-            loader.style.display = 'none';
-            console.log("✅ Loader removido.");
-        }
-
-    } catch (error) {
-        console.error("❌ Erro no carregamento:", error);
-        // Mesmo com erro, removemos o loader para o site não ficar travado
-        const loader = document.getElementById('global-loader');
-        if (loader) loader.style.display = 'none';
-    }
-};
+        };
 
 
         // CONTROLES DO MODAL (NOVO)
