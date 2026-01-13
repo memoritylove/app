@@ -1,0 +1,2194 @@
+<b></b><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Preparei uma surpresa para você... ❤️">
+	<meta property="og:description" content="Um presente digital eterno para guardar nossa história. Clique para ver.">
+	<meta property="og:image" content="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1200&auto=format&fit=crop"> <meta property="og:url" content="https://memoryloveapp.blogspot.com/">
+	<meta name="theme-color" content="#E91E63">
+    <title>MemoryLove | O Presente Digital Perfeito</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Great+Vibes&family=Dancing+Script:wght@700&family=Cinzel:wght@700&family=Playfair+Display:ital,wght@0,700;1,400&family=Shadows+Into+Light&family=Orbitron:wght@500&family=Parisienne&family=Indie+Flower&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 1. CORE & RESET --- */
+        :root { --primary: #E91E63; --bg: #f0f2f5; --text: #1e293b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+		
+		/* Impede que elementos que saem da tela criem barras de rolagem extras */
+		html, body {
+			overflow-x: hidden;
+			height: 100%;
+		}
+
+		/* Isso impede que qualquer coisa (como emojis) crie scroll extra para os lados ou para baixo */
+		.gift-container {
+			position: relative;
+			overflow: hidden !important; /* Essencial para os emojis não esticarem a página */
+			width: 100%;
+			max-width: 500px;
+			margin: 0 auto;
+		}
+
+		/* Garante que o item da chuva não afete o layout */
+		.rain-item {
+			pointer-events: none;
+			z-index: 100;
+			position: absolute;
+		}
+
+        /* LOADER */
+        #global-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
+        .spinner { width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* TOAST */
+        #toast { visibility: hidden; min-width: 280px; margin-left: -140px; background-color: #222; color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; font-size: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); opacity: 0; transition: all 0.3s; transform: translateY(20px); }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; transform: translateY(0); }
+
+        /* LAYOUT GERAL */
+        .view-section { display: none; width: 100%; min-height: 100vh; }
+        
+        /* --- LANDING PAGE (VISUAL PREMIUM) --- */
+        #view-landing { display: block; background: #0f172a; overflow-x: hidden; position: relative; }
+        
+        .landing-bg {
+			position: fixed; 
+			top: 0; 
+			left: 0; 
+			width: 100%; 
+			height: 100%; 
+			z-index: 0;
+			background: #0f172a; /* Cor sólida escura, muito mais leve */
+		}
+        
+		@keyframes floatOrb { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
+
+        .lp-container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .lp-nav { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; }
+        .lp-logo { font-family: 'Great Vibes'; font-size: 2.5rem; color: #fff; text-shadow: 0 0 20px rgba(233, 30, 99, 0.8); }
+        .lp-nav-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 10px 25px; border-radius: 30px; backdrop-filter: blur(10px);
+            transition: 0.3s; cursor: pointer; font-weight: 600;
+        }
+        .lp-nav-btn:hover { background: white; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+
+        .lp-hero {
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center;
+            min-height: 80vh; padding-bottom: 50px;
+        }
+        .lp-hero-content h1 {
+            font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #fbcfe8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .lp-hero-content p { font-size: 1.2rem; color: #cbd5e1; margin-bottom: 30px; line-height: 1.6; max-width: 90%; }
+        
+        .cta-btn {
+            background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; padding: 18px 40px;
+            border-radius: 50px; font-size: 1.1rem; font-weight: bold; border: none; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4); transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(236, 72, 153, 0.6); }
+
+        .lp-hero-img { position: relative; perspective: 1000px; }
+        .phone-3d {
+            width: 300px; height: 600px; background: #000; border-radius: 40px; border: 8px solid #333;
+            margin: 0 auto; transform: rotateY(-15deg) rotateX(5deg); box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden; position: relative; transition: 0.5s;
+        }
+        .phone-3d:hover { transform: rotateY(0) rotateX(0); }
+
+        .lp-features { padding: 80px 0; }
+        .lp-title { text-align: center; font-size: 2.5rem; color: white; margin-bottom: 60px; }
+        .lp-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; text-align: center;
+            transition: 0.3s;
+        }
+        .glass-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.1); border-color: rgba(255,255,255,0.3); }
+        .glass-icon { font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(45deg, #ec4899, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card h3 { color: white; margin-bottom: 10px; font-size: 1.3rem; }
+        .glass-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; }
+
+        .lp-steps { padding: 80px 0; position: relative; }
+        .step-container { display: flex; justify-content: space-between; position: relative; margin-top: 50px; }
+        .step-line { position: absolute; top: 25px; left: 0; width: 100%; height: 2px; background: rgba(255,255,255,0.1); z-index: -1; }
+        .step-item { text-align: center; flex: 1; padding: 0 10px; }
+        .step-num { 
+            width: 50px; height: 50px; background: #0f172a; border: 2px solid #8b5cf6; color: #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            margin: 0 auto 20px auto; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .step-item h4 { color: white; margin-bottom: 10px; }
+        .step-item p { color: #94a3b8; font-size: 0.9rem; }
+
+        .lp-pricing { padding: 80px 0 120px 0; }
+        .price-card {
+            background: rgba(255,255,255,0.03); border-radius: 24px; padding: 40px; position: relative;
+            border: 1px solid rgba(255,255,255,0.05); text-align: center; overflow: hidden;
+        }
+        .price-card.popular { background: linear-gradient(145deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1)); border: 1px solid rgba(236, 72, 153, 0.3); }
+        .tag-promo {
+            position: absolute; top: 15px; right: 15px; background: #ec4899; color: white;
+            font-size: 0.7rem; padding: 5px 10px; border-radius: 20px; font-weight: bold;
+        }
+        .price-val { font-size: 3rem; color: white; font-weight: 800; margin: 20px 0; }
+        .price-val span { font-size: 1rem; color: #94a3b8; font-weight: 400; }
+        .price-list { list-style: none; margin: 30px 0; text-align: left; }
+        .price-list li { color: #cbd5e1; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+        .price-list li i { color: #10b981; }
+
+        @media (max-width: 900px) {
+            .lp-hero { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+            .lp-hero-content p { margin: 0 auto 30px auto; }
+            .lp-hero-content h1 { font-size: 2.8rem; }
+            .lp-grid-3 { grid-template-columns: 1fr; }
+            .step-container { flex-direction: column; gap: 30px; }
+            .step-line { display: none; }
+            .phone-3d { width: 260px; height: 520px; }
+        }
+
+        /* --- LOGIN MODAL (NOVO) --- */
+        #login-modal-overlay {
+			position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+			background: rgba(0,0,0,0.85); /* Aumentamos a opacidade e tiramos o backdrop-filter */
+			z-index: 99999; display: none;
+			justify-content: center; align-items: center; padding: 20px; 
+			opacity: 0; transition: opacity 0.3s;
+		}
+        #login-modal-overlay.show { opacity: 1; }
+        
+        .login-box {
+            background: white; width: 100%; max-width: 450px;
+            padding: 40px; border-radius: 24px; position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            text-align: center; transform: scale(0.9); transition: transform 0.3s;
+        }
+        #login-modal-overlay.show .login-box { transform: scale(1); }
+
+        .btn-close-modal {
+            position: absolute; top: 20px; right: 20px; background: transparent; border: none;
+            font-size: 1.5rem; color: #94a3b8; cursor: pointer;
+        }
+
+        /* DASHBOARD */
+        #view-dashboard { height: 100vh; overflow: hidden; background: #f8fafc; } 
+        .app-container { display: flex; height: 100%; position: relative; }
+        
+        .sidebar { 
+            width: 280px; background: white; border-right: 1px solid #e2e8f0; padding: 25px; 
+            display: flex; flex-direction: column; z-index: 1000; box-shadow: 5px 0 25px rgba(0,0,0,0.03); position: relative;
+        }
+        .sidebar button { z-index: 1001; position: relative; cursor: pointer; pointer-events: auto !important; }
+
+        .editor-area { flex: 1; padding: 40px; overflow-y: auto; background: #f1f5f9; padding-bottom: 150px; scroll-behavior: smooth; }
+        .preview-area { width: 420px; background: #cbd5e1; border-left: 1px solid #94a3b8; display: flex; align-items: center; justify-content: center; position: relative; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px; }
+
+        .mobile-preview-container { display: none; margin-top: 20px; padding-bottom: 50px; }
+
+        @media (max-width: 900px) {
+            #view-dashboard { height: auto; overflow: initial; }
+            .app-container { flex-direction: column; height: auto; }
+            .sidebar { 
+                width: 100%; padding: 15px; flex-direction: row; overflow-x: auto; 
+                height: auto; border-bottom: 1px solid #e2e8f0; position: sticky; 
+                top: 0; gap: 10px; white-space: nowrap; z-index: 2000;
+            }
+            .sidebar::-webkit-scrollbar { display: none; }
+            .preview-area { display: none; } 
+            .editor-area { padding: 20px; overflow-y: visible; }
+            .btn span { display: none; } 
+            .btn { padding: 12px; min-width: 45px; }
+            
+            .mobile-preview-container { display: block; text-align: center; }
+            .mobile-preview-container .phone-mockup { margin: 0 auto; transform: scale(0.9); transform-origin: top; }
+        }
+
+        .btn { padding: 12px 24px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; font-size: 0.9rem; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-sec { background: white; border: 1px solid #e2e8f0; color: #475569; }
+        .btn-success { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2); }
+        .btn-sm { padding: 5px 10px; font-size: 0.8rem; }
+        .btn-danger { background: #ff4444; color: white; }
+        
+        .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 15px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); }
+        .card h4 { margin-bottom: 20px; color: #334155; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+        .inp { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 15px; background: #f8fafc; transition: 0.3s; font-family: inherit; font-size: 0.95rem; color: #333; }
+        .photo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .photo-slot { aspect-ratio: 1; background: #f1f5f9; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px dashed #cbd5e1; overflow: hidden; position: relative; transition: 0.3s; }
+        .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .timeline-editor-item {
+            background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 10px; position: relative;
+        }
+        .btn-add-moment { width: 100%; padding: 15px; border: 2px dashed #cbd5e1; background: transparent; color: #64748b; font-weight: bold; cursor: pointer; border-radius: 12px; transition: 0.3s; }
+        .btn-add-moment:hover { background: #f1f5f9; border-color: var(--primary); color: var(--primary); }
+
+        .phone-mockup { width: 340px; height: 680px; background: #111; border-radius: 45px; border: 10px solid #2d2d2d; position: relative; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+        .screen { 
+            width: 100%; height: 100%; background: white; 
+            overflow-y: auto; scrollbar-width: none; position: relative; overflow-x: hidden;
+        }
+        
+        /* VISUAL DO PRESENTE */
+        #view-gift { position: relative; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; height: 100vh; }
+
+        .gift-container { width: 100%; max-width: 500px; min-height: 100vh; margin: 0 auto; background: inherit; position: relative; box-shadow: 0 0 80px rgba(0,0,0,0.5); overflow-x: hidden; }
+        .gift-body { padding: 25px; padding-top: 70px; padding-bottom: 250px; text-align: center; color: white; }
+
+        /* TEMAS */
+        .t-classic { background: linear-gradient(135deg, #2b0a12, #521322); --font: 'Great Vibes'; --gold: #e5c572; }
+        .t-neon-pink { 
+            background: radial-gradient(circle at center, #1a0b12 0%, #000000 100%); 
+            --font: 'Orbitron'; --gold: #ff1493; --primary: #ff69b4; color: #fff;
+        }
+        .t-neon-pink .g-counter-box { background: rgba(0,0,0,0.8); border: 2px solid #ff1493; box-shadow: 0 0 15px #ff1493, inset 0 0 10px rgba(255, 20, 147, 0.3); }
+        .t-neon-pink .c-val { color: #ff69b4; text-shadow: 0 0 10px #ff69b4; }
+        .t-neon-pink .g-title { text-shadow: 0 0 20px #ff1493; color: #fff0f5; }
+        .t-neon-pink .g-slider, .t-neon-pink .final-gallery img { border: 2px solid #ff1493; box-shadow: 0 0 20px rgba(255, 20, 147, 0.4); }
+
+        .t-classic .g-counter-box { background: #3a101a; border-radius: 20px; padding: 30px 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .t-classic .timer-title { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #ffccd5; margin-bottom: 25px; }
+        .t-classic .c-val { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 400; color: #d4af37; margin-bottom: 5px; text-shadow: none; }
+        .t-classic .c-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; color: rgba(255,255,255,0.7); }
+        .t-classic .since-date-text { margin-top: 25px; font-size: 0.9rem; color: rgba(255,255,255,0.8); font-style: italic; font-family: 'Inter', sans-serif; }
+
+        .t-blue { background: linear-gradient(135deg, #0f172a, #1e3a8a); --font: 'Dancing Script'; --gold: #ffd700; }
+        .t-neon-passion { background: radial-gradient(circle at center, #2e0212 0%, #000000 100%); color: #fff; --font: 'Parisienne'; --gold: #ff00de; --primary: #ff00de; }
+        .t-neon-gal { background: radial-gradient(circle at top, #0f172a 0%, #020617 100%); color: #fff; --font: 'Cinzel'; --gold: #fbbf24; --primary: #fbbf24; }
+        /* AJUSTE GLOBAL PARA TEMAS CLAROS (Light e Polaroid) */
+		/* --- TEMA LIGHT (CLEAN) --- */
+		.t-light {
+			background-color: #ffffff !important;
+			color: #1e293b !important;
+			font-family: 'Inter', sans-serif;
+		}
+
+		.t-light .g-title { color: #1e293b !important; text-shadow: none !important; font-weight: 800; }
+		.t-light .g-date { color: #64748b !important; }
+
+		/* Contador Clean */
+		.t-light .g-counter-box {
+			background: #f8fafc !important;
+			border: 1px solid #e2e8f0 !important;
+			border-radius: 15px !important;
+		}
+		.t-light .c-lbl { color: #475569 !important; font-weight: 700 !important; }
+		.t-light .c-val { color: #E91E63 !important; text-shadow: none !important; }
+
+		/* Linha do Tempo Clean */
+		.t-light .timeline-container::before { background: #e2e8f0 !important; }
+		.t-light .tl-title { color: #0f172a !important; }
+		.t-light .tl-desc { color: #64748b !important; }
+
+		/* --- TEMA POLAROID (ÁLBUM) --- */
+		.t-polaroid {
+			background-color: #f4f1ea !important; /* Cor de papel seda */
+			color: #2d3436 !important;
+			font-family: 'Indie Flower', cursive !important;
+		}
+
+		.t-polaroid .g-title { color: #2d3436 !important; font-size: 3.5rem !important; }
+
+		/* Moldura Especial Polaroid para Fotos */
+		.t-polaroid .g-slider, 
+		.t-polaroid .final-gallery img {
+			background: #ffffff !important;
+			padding: 10px 10px 40px 10px !important; /* Borda inferior larga */
+			border-radius: 2px !important;
+			box-shadow: 8px 8px 20px rgba(0,0,0,0.15) !important;
+			border: 1px solid #ddd !important;
+			transform: rotate(-1.5deg); /* Foto levemente inclinada */
+		}
+
+		/* Fotos da galeria alternando inclinação */
+		.t-polaroid .final-gallery img:nth-child(even) {
+			transform: rotate(2deg);
+		}
+
+		/* Contador Estilo Etiqueta */
+		.t-polaroid .g-counter-box {
+			background: #fff !important;
+			border: 2px dashed #d4af37 !important;
+			transform: rotate(0.5deg);
+		}
+		.t-polaroid .c-lbl { color: #2d3436 !important; font-weight: 400 !important; letter-spacing: 0px; }
+		.t-polaroid .c-val { color: #d4af37 !important; font-family: 'Indie Flower', cursive !important; }
+
+		/* Linha do Tempo Estilo Escrita */
+		.t-polaroid .timeline-container::before { background: #d4af37 !important; opacity: 0.3; }
+		.t-polaroid .tl-title { font-family: 'Indie Flower', cursive; font-size: 1.4rem; }
+		.t-polaroid .tl-item::before { background: #d4af37 !important; box-shadow: none !important; }
+
+		.final-gallery img {
+			width: 100%;
+			aspect-ratio: 1/1;
+			object-fit: cover;
+			border-radius: 15px; /* Bordas arredondadas para o Slider e Galeria */
+			box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* Sombra de profundidade */
+			transition: transform 0.3s ease;
+		}
+
+		.final-gallery img:hover {
+			filter: brightness(0.9); 
+			transform: none !important; /* Isso força a remoção de qualquer zoom anterior */
+		}
+
+		/* --- AJUSTES DE CONTRASTE PARA TEMAS CLAROS --- */
+
+		/* Forçar cor da Linha do Tempo nos Temas Claros */
+		.t-light .tl-item, .t-polaroid .tl-item {
+			color: #1e293b !important; /* Azul quase preto */
+		}
+
+		.t-light .tl-date, .t-polaroid .tl-date {
+			color: #E91E63 !important; /* Rosa forte para as datas */
+			font-weight: 800 !important;
+			opacity: 1 !important;
+		}
+
+		.t-light .tl-title, .t-polaroid .tl-title {
+			color: #0f172a !important; /* Preto sólido */
+			font-weight: 700 !important;
+			opacity: 1 !important;
+		}
+
+		.t-light .tl-desc, .t-polaroid .tl-desc {
+			color: #334155 !important; /* Cinza escuro legível */
+			opacity: 1 !important;
+		}
+
+		/* Forçar visibilidade da Linha Vertical */
+		.t-light .timeline-container::before, 
+		.t-polaroid .timeline-container::before {
+			background: rgba(0, 0, 0, 0.15) !important;
+		}
+
+		/* Forçar visibilidade das legendas do contador (DIAS, HRS, etc) */
+		.t-light .c-lbl, .t-polaroid .c-lbl {
+			color: #475569 !important;
+			opacity: 1 !important;
+			font-weight: 700 !important;
+			text-shadow: none !important;
+		}
+
+		/* Forçar visibilidade do texto da carta (Mensagem) */
+		.t-light .g-msg, .t-polaroid .g-msg {
+			color: #1e293b !important;
+			opacity: 1 !important;
+		}
+		
+		/* FORÇAR VISIBILIDADE DO RODAPÉ EM TEMAS CLAROS */
+		.t-light .g-footer, 
+		.t-polaroid .g-footer {
+			color: #1e293b !important; /* Azul escuro sólido */
+			opacity: 1 !important;      /* Remove qualquer transparência */
+			font-weight: 600 !important;
+			margin-top: 40px !important;
+			display: block !important;  /* Garante que não esteja escondido */
+		}
+
+		/* Caso você use a classe g-footer dentro de um parágrafo */
+		.t-light p.g-footer, 
+		.t-polaroid p.g-footer {
+			color: #475569 !important; /* Cinza escuro para os créditos */
+		}
+
+        .g-title { font-family: var(--font); font-size: 3.2rem; line-height: 1.1; margin-bottom: 5px; }
+        .heart-beat { display: inline-block; color: #ff4757 !important; animation: heartbeat 1.2s infinite; }
+        @keyframes heartbeat { 0%{transform:scale(1)} 15%{transform:scale(1.3)} 30%{transform:scale(1)} 45%{transform:scale(1.3)} 100%{transform:scale(1)} }
+        
+        .g-slider { width: 100%; aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden; position: relative; margin-bottom: 30px; background: #000; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .g-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        .g-slide.active { opacity: 1; }
+
+        .g-counter-box { background: rgba(0, 0, 0, 0.4); border-radius: 20px; padding: 25px 15px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(5px); }
+        .counter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .c-item { display: flex; flex-direction: column; align-items: center; }
+        .c-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 5px; text-shadow: 0 0 10px rgba(233, 30, 99, 0.5); }
+        .c-lbl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; opacity: 0.8; }
+        
+        .g-msg { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; text-align: justify; font-size: 1rem; line-height: 1.8; margin-bottom: 30px; white-space: pre-wrap; font-family: 'Inter', sans-serif; }
+        
+        .timeline-container { position: relative; margin: 40px 0; padding-left: 20px; text-align: left; }
+        .timeline-container::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,0.3); }
+        .tl-item { margin-bottom: 30px; position: relative; padding-left: 20px; }
+        .tl-item::before { content: '♥'; position: absolute; left: -26px; top: 0; background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; box-shadow: 0 0 10px var(--primary); }
+        .tl-date { font-size: 0.8rem; opacity: 0.8; font-weight: bold; margin-bottom: 5px; display: block; color: var(--gold); }
+        .tl-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+        .tl-desc { font-size: 0.9rem; opacity: 0.8; line-height: 1.5; }
+
+        .music-fab {
+            position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; z-index: 999; cursor: pointer;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff4757 25%, #111 26%, #111 28%, #222 29%, #111 32%, #111 45%, #222 46%, #111 48%, #111 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.1);
+            display: flex; justify-content: center; align-items: center; transition: transform 0.3s;
+        }
+        .music-fab svg { width: 24px; height: 24px; fill: white; }
+        .spin-anim { animation: spinVinyl 4s linear infinite; }
+        @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
+        
+        #gift-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; transition: opacity 0.8s; }
+        .open-btn { margin-top: 30px; padding: 15px 50px; background: transparent; border: 2px solid rgba(255,255,255,0.8); color: white; border-radius: 50px; font-weight: 800; font-size: 1.2rem; cursor: pointer; letter-spacing: 3px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(255,255,255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255, 0); } }
+
+        .emoji-grid { display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .emoji-btn { font-size: 1.5rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; width: 45px; height: 45px; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+        
+        .rain-item { pointer-events: none; z-index: 100; color: #ff0000; }
+
+        .final-btn {
+            display: inline-block; margin-top: 25px; padding: 15px 35px;
+            background: #ff1493; color: #ffffff; text-decoration: none; border-radius: 50px;
+            font-weight: 800; cursor: pointer; transition: 0.3s;
+            border: 2px solid rgba(255,255,255,0.5); box-shadow: 0 0 15px rgba(255, 20, 147, 0.6);
+            text-transform: uppercase; letter-spacing: 1px; animation: pulseBtn 2s infinite;
+        }
+        .final-btn:hover { transform: scale(1.05); filter: brightness(1.2); box-shadow: 0 0 25px rgba(255, 20, 147, 0.9); }
+        @keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        #custom-alert-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000;
+            display:none; align-items:center; justify-content:center; padding: 20px;
+        }
+        .letter-box {
+            background: #fffaf0; color: #4a4a4a; border-radius: 5px; padding: 40px; text-align: center;
+            max-width: 500px; width:100%; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: openLetter 0.6s ease-out; font-family: 'Indie Flower', cursive; border: 2px dashed #d4af37;
+        }
+        .letter-box::before { content: ''; position: absolute; top:10px; left:10px; right:10px; bottom:10px; border: 1px solid rgba(0,0,0,0.1); pointer-events: none; }
+        .letter-icon { font-size: 3rem; margin-bottom: 20px; animation: floatIcon 3s ease-in-out infinite; }
+        .letter-text { font-size: 1.4rem; line-height: 1.6; margin-bottom: 30px; white-space: pre-wrap; font-weight: 600; }
+        
+        @keyframes openLetter { from{transform:translateY(100px) scale(0.5) rotate(-10deg); opacity:0} to{transform:translateY(0) scale(1) rotate(0); opacity:1} }
+        @keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+        #captcha-container { margin: 15px 0; background: #f1f5f9; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0; display: none; }
+        .captcha-label { font-size: 0.85rem; font-weight: bold; color: #475569; margin-bottom: 5px; display: block; }
+        #admin-backup-card { border: 2px solid #3b82f6; background: #eff6ff; display: none; }
+		
+		.neon-heart { filter: drop-shadow(0 0 2px #a020f0) drop-shadow(0 0 15px #9370db); display: inline-block; opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div id="global-loader"><div class="spinner"></div></div>
+    <div id="toast"><i class="fas fa-check-circle"></i> Salvo com sucesso!</div>
+
+    <div id="custom-alert-overlay" onclick="closeCustomAlert()">
+        <div class="letter-box" onclick="event.stopPropagation()">
+            <div class="letter-icon">💌</div>
+            <div id="custom-alert-msg" class="letter-text"></div>
+            <button onclick="closeCustomAlert()" class="btn btn-primary" style="border-radius:50px; padding:10px 30px;">Fechar com Amor ❤️</button>
+        </div>
+    </div>
+
+    <div id="view-landing" class="view-section">
+        
+
+        <div class="lp-container">
+            <nav class="lp-nav">
+                <div class="lp-logo">MemoryLove</div>
+                <button class="lp-nav-btn" onclick="openLoginModal()">Área do Cliente</button>
+            </nav>
+
+            <section class="lp-hero">
+                <div class="lp-hero-content">
+                    <h1>O presente digital que faz chorar de emoção.</h1>
+                    <p>Transforme suas fotos, músicas e história em uma página web exclusiva. Mais do que um presente, uma memória eterna que cabe no bolso.</p>
+                    <button class="cta-btn" onclick="openLoginModal()">
+                        <i class="fas fa-magic"></i> Criar Meu Presente
+                    </button>
+                    <div style="margin-top: 20px; display:flex; gap:10px; align-items:center; opacity:0.8;">
+                        <i class="fas fa-user-friends" style="color:#ec4899;"></i>
+                        <span style="color:#fff; font-size:0.9rem;">Mais de 1.200 casais apaixonados já criaram.</span>
+                    </div>
+                </div>
+                <div class="lp-hero-img">
+                    <div class="phone-3d">
+                        <div style="width:100%; height:100%; background: linear-gradient(135deg, #2b0a12, #521322); display:flex; flex-direction:column; align-items:center; padding:20px; color:white; text-align:center; position:relative;">
+                            <div style="font-family:'Great Vibes'; font-size:2rem; margin-top:40px; color:#e5c572; text-shadow:0 0 10px #000;">Romeu & Julieta</div>
+                            
+                            <div style="width:80%; aspect-ratio:1; background:#000; margin:20px 0; border-radius:10px; overflow:hidden; border:2px solid #e5c572; box-shadow:0 0 15px rgba(229, 197, 114, 0.3);">
+                                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1000&auto=format&fit=crop" style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                            
+                            <div style="font-size:2rem; font-weight:bold; color:#e5c572;">5 Anos</div>
+                            <div style="font-size:0.8rem; opacity:0.7;">de uma linda história...</div>
+
+                            <div style="margin-top:20px; width:90%; background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; display:flex; align-items:center; gap:10px;">
+                                <div style="width:30px; height:30px; background:#e5c572; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#2b0a12;"><i class="fas fa-play" style="font-size:0.6rem;"></i></div>
+                                <div style="flex:1; height:4px; background:rgba(255,255,255,0.2); border-radius:2px;"><div style="width:40%; height:100%; background:#e5c572;"></div></div>
+                            </div>
+                            
+                            <div style="margin-top:15px; font-size:0.7rem; opacity:0.6; font-style:italic;">"Desde aquele dia em Verona..."</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lp-features">
+                <h2 class="lp-title">Por que é inesquecível?</h2>
+                <div class="lp-grid-3">
+                    <div class="glass-card">
+                        <i class="fas fa-clock glass-icon"></i>
+                        <h3>Contador de Tempo</h3>
+                        <p>Mostre exatamente quantos anos, dias, horas e segundos vocês estão juntos. O amor calculado ao vivo.</p>
+                    </div>
+                    <div class="glass-card">
+                        <i class="fas fa-music glass-icon"></i>
+                        <h3>Nossa Trilha Sonora</h3>
+                        <p>A música que marcou o relacionamento toca automaticamente enquanto as fotos e textos aparecem.</p>
+                    </div>
+                    <div class="glass-card">
+                        <i class="fas fa-mobile-alt glass-icon"></i>
+                        <h3>100% Digital</h3>
+                        <p>Não precisa baixar nada. Envie o link pelo WhatsApp e veja a reação. Funciona em qualquer celular.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lp-steps">
+                <h2 class="lp-title">Como funciona?</h2>
+                <div class="step-container">
+                    <div class="step-line"></div>
+                    <div class="step-item">
+                        <div class="step-num">1</div>
+                        <h4>Preencha</h4>
+                        <p>Coloque os nomes, a data do início do namoro e escreva uma carta especial.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">2</div>
+                        <h4>Personalize</h4>
+                        <p>Escolha o tema visual, adicione fotos da galeria e a música de fundo.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">3</div>
+                        <h4>Surpreenda</h4>
+                        <p>Gere o link único e envie para o seu amor. Prepare o lenço!</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="lp-pricing">
+                <h2 class="lp-title">Comece Gratuitamente</h2>
+                <div class="lp-grid-3">
+                    <div class="price-card">
+                        <h3>Visitante</h3>
+                        <div class="price-val">R$0</div>
+                        <p style="color:#94a3b8">Para testar e conhecer</p>
+                        <ul class="price-list">
+                            <li><i class="fas fa-check"></i> Editor Completo</li>
+                            <li><i class="fas fa-check"></i> Visualização Local</li>
+                            <li style="opacity:0.5; text-decoration:line-through;"><i class="fas fa-times" style="color:#555"></i> Link para Compartilhar</li>
+                        </ul>
+                        <button class="btn btn-sec" style="width:100%; border-radius:30px;" onclick="openLoginModal()">Testar Agora</button>
+                    </div>
+
+                    <div class="price-card popular">
+                        <div class="tag-promo">MAIS VENDIDO</div>
+                        <h3>Premium</h3>
+                        <div class="price-val">R$9<span>,90</span></div>
+                        <p style="color:#ec4899; font-weight:bold;">Pagamento Único</p>
+                        <ul class="price-list">
+                            <li><i class="fas fa-check"></i> Link Personalizado</li>
+                            <li><i class="fas fa-check"></i> Fotos Ilimitadas</li>
+                            <li><i class="fas fa-check"></i> Músicas Premium</li>
+                            <li><i class="fas fa-check"></i> Sem Anúncios</li>
+							<li><i class="fas fa-check"></i> Pacote com QR Code</li>
+                            <li><i class="fas fa-check"></i> Acesso Vitalício</li>
+                        </ul>
+                        <button class="cta-btn" style="width:100%; justify-content:center;" onclick="openLoginModal()">Criar Premium</button>
+                    </div>
+
+                    <div class="price-card">
+                        <h3>Ultimate</h3>
+                        <div class="price-val">R$19<span>,90</span></div>
+                        <ul class="price-list">
+                            <li><i class="fas fa-check"></i> Tudo do Plano Premium</li>
+                            <li><i class="fas fa-check"></i> Arte do QR Code para Imprimir</li>
+                            <li><i class="fas fa-check"></i> Suporte Prioritário</li>							
+                        </ul>
+                        <button class="btn btn-sec" style="width:100%; border-radius:30px;" onclick="openLoginModal()">Selecionar</button>
+                    </div>
+                </div>
+            </section>
+
+            <footer style="text-align:center; padding:40px; border-top:1px solid rgba(255,255,255,0.1); color:#64748b; font-size:0.9rem;">
+                <p>&copy; 2026 MemoryLove. Feito com ❤️</p>
+                <div style="margin-top:10px;">
+                    <i class="fab fa-instagram" style="margin:0 10px; cursor:pointer;"></i>
+                    <i class="fab fa-tiktok" style="margin:0 10px; cursor:pointer;"></i>
+                    <i class="fab fa-whatsapp" style="margin:0 10px; cursor:pointer;"></i>
+                </div>
+				<div style="margin-top:15px; font-size:0.7rem;">
+    <a href="#" onclick="alert('Termos: Não nos responsabilizamos pelo conteúdo das fotos. Não há reembolso após o download.')" style="color:#64748b; text-decoration:none;">Termos de Uso</a>
+</div>
+            </footer>
+			
+        </div>
+    </div>
+
+    <div id="login-modal-overlay">
+		<div class="login-box">
+			<button class="btn-close-modal" onclick="closeLoginModal()">&times;</button>
+			
+			<div style="display: flex; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9;">
+				<button id="tab-login" onclick="switchAuthTab('login')" style="flex:1; padding:10px; border:none; background:none; cursor:pointer; font-weight:bold; color:var(--primary); border-bottom: 2px solid var(--primary);">Entrar</button>
+				<button id="tab-register" onclick="switchAuthTab('register')" style="flex:1; padding:10px; border:none; background:none; cursor:pointer; font-weight:bold; color:#94a3b8;">Criar Conta</button>
+			</div>
+
+			<h2 id="auth-title" style="font-family:'Great Vibes'; font-size:2rem; color:var(--primary); margin-bottom:15px;">Bem-vindo de volta!</h2>
+			
+			<div style="position: relative;">
+				<input id="l-user" class="inp" placeholder="Seu Nome (ex: rafael)" style="text-align:center;" oninput="checkUserExists(this.value)">
+				<small id="user-status" style="display:block; margin-top:-10px; margin-bottom:10px; font-size:0.7rem; font-weight:bold;"></small>
+			</div>
+			
+			<input id="l-pass" type="password" class="inp" placeholder="Sua Senha Secreta" style="text-align:center;">
+			
+			<div id="captcha-container" style="display: none;">
+				<label class="captcha-label">Desafio Anti-Robô: Quanto é <span id="captcha-quest">?</span></label>
+				<input id="l-captcha" class="inp" placeholder="Resultado" style="text-align:center;">
+			</div>
+
+			<button id="auth-main-btn" onclick="handleAuthAction()" class="btn btn-primary" style="width:100%; margin-top:10px; padding:15px; font-size:1rem; border-radius:30px;">
+				ENTRAR AGORA
+			</button>
+		</div>
+	</div>
+
+    <div id="view-dashboard" class="view-section">
+        <div class="app-container">
+            <aside class="sidebar">
+                <div style="font-weight:800; color:var(--primary); margin-bottom:20px; font-size:1.2rem;" class="sidebar-title">Painel</div>
+                <button class="btn btn-sec" onclick="scrollToId('c-info')"><i class="fas fa-edit"></i> <span>Info</span></button>
+                <button class="btn btn-sec" onclick="scrollToId('c-slider')"><i class="fas fa-images"></i> <span>Fotos</span></button>
+                <button class="btn btn-sec" onclick="scrollToId('c-music')"><i class="fas fa-music"></i> <span>Música</span></button>
+                <button class="btn btn-sec" onclick="scrollToId('c-timeline')"><i class="fas fa-history"></i> <span>Linha do Tempo</span></button>
+                <button class="btn btn-sec" onclick="scrollToId('c-theme')"><i class="fas fa-paint-brush"></i> <span>Visual</span></button>
+                <button class="btn btn-sec" onclick="scrollToId('c-final')"><i class="fas fa-envelope"></i> <span>Mensagem Final</span></button>
+                
+                <button id="sidebar-btn-publish" class="btn btn-success" onclick="scrollToId('c-publish')" style="color:white;"><i class="fas fa-globe"></i> <span>PUBLICAR</span></button>
+                
+                <button id="btn-view-real" class="btn btn-primary" onclick="window.openGiftUrl()" style="display:none; animation: pulse 2s infinite;">
+                    <i class="fas fa-external-link-alt"></i> <span>VER PRESENTE REAL</span>
+                </button>
+				
+				<button onclick="window.baixarPresenteOffline()" class="btn btn-sec" style="width: 100%; background: #6366f1; color: white; border: none; margin-top: 10px;">
+					<i class="fas fa-download"></i> BAIXAR PRESENTE ETERNO
+				</button>
+				
+				<div style="text-align:center; margin-top:20px; font-size:0.85rem; color:#64748b;">
+					<p>Precisa de ajuda?</p>
+					<a href="mailto:ajuda.memorylove@gmail.com?subject=Ajuda%20MemoryLove&body=Ola,%20preciso%20de%20ajuda%20com%20o%20meu%20presente." 
+					   style="display:inline-block; margin-top:5px; color:var(--primary); text-decoration:none; font-weight:bold; border:1px solid var(--primary); padding:8px 15px; border-radius:20px; transition:0.3s;">
+					   <i class="fas fa-envelope"></i> Enviar E-mail para o Suporte
+					</a>
+				</div>
+                
+                <button onclick="window.logout()" class="btn btn-sec" style="color:red; margin-top:auto;"><i class="fas fa-sign-out-alt"></i> <span>Sair</span></button>
+            </aside>
+            
+            <main class="editor-area" id="editor-container">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2>Olá, <span id="user-display">...</span></h2>
+                    <button onclick="window.saveData()" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
+                </div>
+
+                <div id="admin-backup-card" class="card">
+    <h4 style="color:#1d4ed8;"><i class="fas fa-shield-alt"></i> Privilégios de Administrador</h4>
+    <p style="font-size:0.9rem; color:#1e40af; margin-bottom:15px;">Ferramentas de gestão.</p>
+    
+    <button onclick="window.downloadFullBackup()" class="btn btn-primary" style="background:#2563eb; width:100%; margin-bottom:10px;">
+        <i class="fas fa-download"></i> BAIXAR BACKUP JSON
+    </button>
+
+    <button onclick="window.adminViewAllPhotos()" class="btn btn-success" style="background:#059669; width:100%;">
+        <i class="fas fa-images"></i> Moderação de Conteúdo
+    </button>
+</div>                
+
+                <div id="c-link-share" class="card" style="border: 2px dashed #E91E63; background: #fff0f5; display:none;">
+				<h4 style="color:#E91E63;"><i class="fas fa-check-circle"></i> Publicado com Sucesso!</h4>
+				
+				<div style="display: flex; gap: 20px; align-items: stretch; flex-wrap: wrap; margin-top: 15px;">
+					
+					<div style="flex: 1; min-width: 250px; background: white; padding: 20px; border-radius: 15px; border: 1px solid #ffccd5; display: flex; flex-direction: column; justify-content: center;">
+						<p style="font-size: 0.85rem; color: #666; margin-bottom: 10px; font-weight: bold;">Seu link personalizado:</p>
+						<div style="display: flex; gap: 5px; background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; align-items: center;">
+							<span id="final-link-text" style="flex: 1; font-weight: bold; color: #333; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">...</span>
+							<button onclick="copyLink()" class="btn btn-primary btn-sm" style="padding: 8px 15px;">COPIAR</button>
+						</div>
+						<p style="font-size: 0.75rem; color: #ec4899; margin-top: 10px;">
+							<i class="fas fa-info-circle"></i> Envie este link para o seu amor pelo WhatsApp!
+						</p>
+					</div>
+
+					<div style="width: 200px; background: white; padding: 15px; border-radius: 15px; border: 1px solid #ffccd5; text-align: center; margin: 0 auto;">
+						<p style="font-size: 0.75rem; color: #666; margin-bottom: 8px; font-weight: bold;">QR Code</p>
+						<img id="qr-code-img" src="" alt="QR Code" style="width: 140px; height: 140px; border: 2px solid #f1f5f9; border-radius: 8px; margin-bottom: 10px;">
+						<button onclick="window.downloadQRCode()" class="btn btn-sec btn-sm" style="width: 100%; font-size: 0.7rem;">
+							<i class="fas fa-download"></i> BAIXAR PNG
+						</button>
+					</div>
+
+    </div>
+</div>
+
+                <div id="c-info" class="card">
+                    <h4>Informações Básicas</h4>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <input id="inp-n1" class="inp" placeholder="Seu Nome" oninput="updatePreview()">
+                        <input id="inp-n2" class="inp" placeholder="Nome Dela(e)" oninput="updatePreview()">
+                    </div>
+                    <label style="font-size:0.8rem; font-weight:bold;">Data de Início:</label>
+                    <input type="date" id="inp-date" class="inp" oninput="updatePreview()">
+                    <textarea id="inp-msg" class="inp" rows="4" placeholder="Escreva uma carta bonita aqui..." oninput="updatePreview()"></textarea>
+                </div>
+
+                <div id="c-timeline" class="card">
+                    <h4><i class="fas fa-history" style="color:#E91E63;"></i> Linha do Tempo</h4>
+                    <p style="font-size:0.9rem; color:#666;">Adicione momentos importantes da história de vocês.</p>
+                    <div id="timeline-editor-list"></div>
+                    <button class="btn-add-moment" onclick="addTimelineMoment()">+ Adicionar Momento</button>
+                </div>
+
+                <div id="c-slider" class="card"><h4>Slider Topo (4 Fotos)</h4><div class="photo-grid" id="grid-slider"></div></div>
+                <div id="c-gallery" class="card"><h4>Galeria Extra (4 Fotos)</h4><div class="photo-grid" id="grid-gallery"></div></div>
+
+                <div id="c-music" class="card">
+                    <h4><i class="fas fa-music"></i> Trilha Sonora (Pixabay)</h4>
+                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                        <select id="inp-music-select" class="inp" onchange="selectMusicFromList(this.value)" style="margin:0;">
+                            <option value="">Selecione uma música romântica...</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/10/25/audio_55e2439c2c.mp3">1. Cinematic Emotional Piano</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3">2. Romantic Wedding (Suave)</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/02/10/audio_fc8c858597.mp3">3. Soft Piano & Strings</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/03/20/audio_6f4a55ffe4.mp3">4. Valentine's Day (Piano)</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/11/11/audio_5250912384.mp3">5. Love Story (Orquestral)</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/01/21/audio_32c0296c02.mp3">6. Inspiring Cinematic</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2021/11/24/audio_c352528773.mp3">7. Piano Moment</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2023/04/12/audio_1c5086d941.mp3">8. Forever Yours</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/04/27/audio_3070477119.mp3">9. Emotional Trailer</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/03/10/audio_e65c010c70.mp3">10. Beautiful Life</option>
+                        </select>
+                        <button class="btn btn-sec" onclick="previewAudio()" style="white-space:nowrap;"><i class="fas fa-play"></i></button>
+                    </div>
+                    <input id="inp-music" class="inp" placeholder="Ou cole seu link MP3..." oninput="updatePreview()">
+                    <audio id="preview-player" style="display:none;"></audio>
+                </div>
+
+                <div id="c-theme" class="card">
+                    <h4>Visual & Efeitos</h4>
+                    <select id="inp-theme" class="inp" onchange="updatePreview()">
+                        <option value="t-classic">Clássico (Vinho & Dourado)</option>
+                        <option value="t-neon-pink">Neon Love (Rosa & Brilho) ✨</option>
+                        <option value="t-blue">Azul Noite</option>
+                        <option value="t-light">Clean / Claro</option>
+                        <option value="t-polaroid">Polaroid</option>
+                        <option value="t-neon-passion">Neon Passion</option>
+                        <option value="t-neon-gal">Galactic</option>
+                    </select>
+                    <label style="font-size:0.8rem; font-weight:bold;">Emojis da Chuva:</label>
+                    <div class="emoji-grid">
+                        <button class="emoji-btn" onclick="addEmoji('❤️')">❤️</button>
+                        <button class="emoji-btn" onclick="addEmoji('✨')">✨</button>
+                        <button class="emoji-btn" onclick="addEmoji('🌹')">🌹</button>
+                        <button class="emoji-btn" onclick="addEmoji('💍')">💍</button>
+                    </div>
+                    <input id="inp-emojis" class="inp" value="❤️✨" oninput="updatePreview()">
+                </div>
+
+                <div id="c-final" class="card">
+                    <h4><i class="fas fa-envelope" style="color:#E91E63;"></i> Botão & Cartinha</h4>
+                    <p style="font-size:0.9rem; color:#666;">Configure o botão do rodapé.</p>
+                    
+                    <input id="inp-final" class="inp" placeholder="Texto Rodapé (Ex: Feito com amor...)" oninput="updatePreview()">
+                    
+                    <label style="font-size:0.8rem; font-weight:bold; margin-top:10px; display:block;">Botão Final (Opcional):</label>
+                    <input id="inp-btn-msg" class="inp" placeholder="Texto do Botão (Ex: Clique aqui para ler...)" oninput="updatePreview()">
+                    
+                    <label style="font-size:0.8rem; font-weight:bold; margin-top:10px; display:block;">Mensagem da Cartinha (Ao Clicar):</label>
+                    <textarea id="inp-btn-link" class="inp" rows="5" placeholder="Escreva aqui a mensagem secreta que aparecerá na cartinha..." oninput="updatePreview()"></textarea>
+                </div>
+				
+				<div id="c-publish" class="card" style="border: 2px solid #10b981; background: #f0fdf4;">
+    <h4 style="color:#047857;">🚀 Publicar Presente</h4>
+    
+    <div id="pub-premium-only" style="display:none;">
+        <p style="font-size:0.9rem; color:#065f46; margin-bottom:10px;">Escolha o nome do seu link exclusivo abaixo:</p>
+        <div style="display:flex; gap:10px; flex-wrap: wrap;">
+            <input id="inp-public-id" class="inp" placeholder="ex: amor-eterno" style="margin:0; flex:1; min-width: 150px;">
+            <button onclick="window.publishGift()" class="btn btn-success">PUBLICAR AGORA</button>
+        </div>
+    </div>
+
+    <div id="pub-free-only" style="text-align: center; padding: 10px;">
+    <p style="color: #666; margin-bottom: 15px;">A publicação de links personalizados é exclusiva para o <strong>Plano Eterno</strong>.</p>
+    
+    <button onclick="irParaPagamento()" class="btn btn-primary" style="background: #f59e0b; border:none; width: 100%;">
+        <i class="fas fa-crown"></i> ATIVAR PLANO PREMIUM (R$ 9,90)
+    </button>
+</div>
+</div>
+
+                <div class="mobile-preview-container">
+                    <h4 style="margin-bottom: 20px; color: #64748b;">Visualização em Tempo Real</h4>
+                    <div class="phone-mockup">
+                        <div class="screen" id="preview-screen-mobile"></div>
+                    </div>
+                </div>
+
+            </main>
+
+            <aside class="preview-area">
+                <div class="phone-mockup"><div class="screen" id="preview-screen"></div></div>
+            </aside>
+        </div>
+    </div>
+
+    <div id="view-gift" class="view-section" style="background:#222; overflow-y:auto;">
+        <div id="gift-overlay">
+            <h1 class="heart-beat neon-heart" style="font-size:5rem;">❤️</h1><br/>
+			<h1 style="font-family: 'Great Vibes'; font-size: 3.5rem; color: #ffccd5;">Uma Surpresa...</h1>
+			<p style="color: rgba(255,255,255,0.7); margin-top: 10px;">Para o amor da minha vida</p>
+            <button class="open-btn" onclick="startExperience()">Clique Aqui</button>
+        </div>
+        <div id="final-content"></div>
+        <div class="music-fab" id="music-fab" style="display:none;" onclick="toggleAudio()">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+        </div>
+    </div>
+
+    <audio id="audio-player" loop></audio>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const sysToken = "e98ae1662cca184cc98a633830201591"; 
+        const _0x5f21 = [
+			"\x41\x49\x7a\x61\x53\x79\x43\x52\x44\x54\x63\x7a\x34\x65\x35\x79\x57\x4c\x56\x66\x44\x39\x71\x6a\x62\x41\x6a\x77\x41\x51\x68\x74\x6e\x47\x51\x47\x7a\x77",
+			"\x6d\x65\x6d\x6f\x72\x69\x61\x73\x2d\x66\x31\x38\x38\x65\x2e\x66\x69\x72\x65\x62\x61\x73\x65\x61\x70\x70\x2e\x63\x6f\x6d",
+			"\x68\x74\x74\x70\x73\x3a\x2f\x2f\x6d\x65\x6d\x6f\x72\x69\x61\x73\x2d\x66\x31\x38\x38\x65\x2d\x64\x65\x66\x61\x75\x6c\x74\x2d\x72\x74\x64\x62\x2e\x66\x69\x72\x65\x62\x61\x73\x65\x69\x6f\x2e\x63\x6f\x6d",
+			"\x6d\x65\x6d\x6f\x72\x69\x61\x73\x2d\x66\x31\x38\x38\x65", 
+			"\x6d\x65\x6d\x6f\x72\x69\x61\x73\x2d\x66\x31\x38\x38\x65\x2e\x66\x69\x72\x65\x62\x61\x73\x74\x6f\x72\x61\x67\x65\x2e\x61\x70\x70", 
+			"\x31\x3a\x31\x30\x39\x33\x33\x33\x36\x33\x35\x39\x32\x36\x36\x3a\x77\x65\x62\x3a\x35\x33\x61\x34\x37\x37\x62\x39\x36\x33\x34\x31\x36\x37\x39\x39\x35\x65\x30\x63\x33\x62"
+		];
+
+		const _0x4e12 = (index) => _0x5f21[index];
+
+		const firebaseConfig = {
+			apiKey: _0x4e12(0),
+			authDomain: _0x4e12(1),
+			databaseURL: _0x4e12(2),
+			projectId: _0x4e12(3),
+			storageBucket: _0x4e12(4),
+			appId: _0x4e12(5)
+		};
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let currentUser = null; 
+        let currentPublicId = null;
+        let captchaAnswer = null;
+        let data = { 
+            n1:"", n2:"", date:"", msg:"", music:"", theme:"t-classic", final:"", emojis:"❤️✨", 
+            btnMsg: "", btnLink: "",
+            slider:[null,null,null,null], 
+            gallery:[null,null,null,null],
+            timeline: []
+        };
+        let rainInterval;
+        let autoScrollInterval;
+		let activeRainIntervals = {};
+		let authMode = 'login'; // 'login' ou 'register'
+		
+		window.switchAuthTab = (mode) => {
+			authMode = mode;
+			const isLogin = mode === 'login';
+			
+			// Estilo das abas
+			document.getElementById('tab-login').style.color = isLogin ? 'var(--primary)' : '#94a3b8';
+			document.getElementById('tab-login').style.borderBottom = isLogin ? '2px solid var(--primary)' : 'none';
+			document.getElementById('tab-register').style.color = !isLogin ? 'var(--primary)' : '#94a3b8';
+			document.getElementById('tab-register').style.borderBottom = !isLogin ? '2px solid var(--primary)' : 'none';
+			
+			// Textos e Visibilidade
+			document.getElementById('auth-title').innerText = isLogin ? "Bem-vindo de volta!" : "Crie sua conta grátis";
+			document.getElementById('auth-main-btn').innerText = isLogin ? "ENTRAR AGORA" : "CRIAR MINHA CONTA";
+			document.getElementById('captcha-container').style.display = isLogin ? 'none' : 'block';
+			
+			if(!isLogin) generateCaptcha();
+		};
+		
+		window.checkUserExists = async (user) => {
+			const cleanUser = user.toLowerCase().replace(/\s/g,'');
+			const statusEl = document.getElementById('user-status');
+			
+			// Se estiver na aba de LOGIN, não mostra avisos de disponibilidade
+			if (authMode === 'login' || cleanUser.length < 3) {
+				statusEl.innerText = "";
+				return;
+			}
+
+			try {
+				const snapshot = await get(child(ref(db), `users/${cleanUser}`));
+				if (snapshot.exists()) {
+					statusEl.innerText = "⚠️ Este usuário já existe";
+					statusEl.style.color = "#ef4444";
+				} else {
+					statusEl.innerText = "✅ Nome disponível";
+					statusEl.style.color = "#10b981";
+				}
+			} catch (e) { console.error(e); }
+		};
+		
+		window.handleAuthAction = () => {
+			if (authMode === 'login') {
+				window.handleLogin();
+			} else {
+				window.handleRegister();
+			}
+		};
+
+
+		window.handleRegister = async () => {
+			const user = document.getElementById('l-user').value.toLowerCase().replace(/\s/g,'');
+			const pass = document.getElementById('l-pass').value;
+			const captchaInput = document.getElementById('l-captcha').value;
+
+			if(!user || !pass || !captchaInput) return alert("Preencha todos os campos e o desafio!");
+			if(parseInt(captchaInput) !== captchaAnswer) {
+				alert("Desafio incorreto!");
+				generateCaptcha();
+				return;
+			}
+
+			document.getElementById('global-loader').style.display = 'flex';
+			const snapshot = await get(child(ref(db), `users/${user}`));
+			
+			if(snapshot.exists()) {
+				document.getElementById('global-loader').style.display = 'none';
+				return alert("Este usuário já está em uso. Escolha outro ou faça login.");
+			}
+
+			// Cria conta
+			await set(ref(db, `users/${user}`), { pass, created: Date.now(), isPremium: false });
+			
+			// Loga automaticamente após criar
+			window.handleLogin(); 
+		};
+		
+		window.irParaPagamento = async () => {
+    if (!currentUser) return alert("Faça login primeiro!");
+
+    // 1. SALVA O USUÁRIO NO LOCALSTORAGE (Crucial para a ponte no GitHub)
+    // Isso garante que, quando o usuário voltar, o sistema saiba quem ele é.
+    localStorage.setItem('usuario_que_pagou', currentUser);
+
+    // 2. Avisa o usuário e explica o fluxo
+    alert("Vou abrir o pagamento em outra aba.\n\nQuando terminar, clique em 'Voltar para a loja' para ativar seu Premium automaticamente!");
+
+    // 3. Abre o PagSeguro (A URL de redirecionamento no painel deve ser a do seu GitHub)
+    window.open("https://pagamento.pagbank.com.br/pagamento?code=de927a34-795b-476b-8b0d-197f5ae22424&t=ce388e3a-12b0-431b-a106-6f44295a09a7", "_blank");
+
+    // 4. Exibe o "Botão de Emergência" caso o redirecionamento automático falhe
+    const toast = document.getElementById('toast');
+    toast.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:10px; padding:10px; background:rgba(0,0,0,0.9); border-radius:10px; border:1px solid #E91E63;">
+            <span style="color:#fff; font-size:14px;">Já finalizou o pagamento?</span>
+            <button onclick="verificarPagamentoManual()" style="background:#E91E63; color:#fff; border:none; padding:8px; border-radius:5px; font-weight:bold; cursor:pointer;">
+                SIM, LIBERAR MEU ACESSO
+            </button>
+        </div>
+    `;
+    toast.className = "show";
+    toast.style.visibility = "visible"; 
+    toast.style.opacity = "1";
+    toast.style.bottom = "20px"; // Ajustado para não cobrir o centro todo
+};
+
+// Função de verificação manual aprimorada
+window.verificarPagamentoManual = async () => {
+    const code = prompt("Cole aqui o Código da Transação (enviado no seu e-mail pelo PagSeguro):");
+    
+    if(!code || code.length < 5) {
+        alert("Para liberação manual, preciso do código da transação. Caso não encontre, chame nosso suporte.");
+        return;
+    }
+
+    document.getElementById('global-loader').style.display = 'flex';
+    
+    try {
+        const { ref, get, update } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+        const paymentRef = ref(db, 'pagamentos_confirmados/' + code.trim());
+        
+        const snapshot = await get(paymentRef);
+        
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            
+            // Verifica se o pagamento está aprovado e se já não tem outro dono
+            if (data.confirmado === true) {
+                if (data.usuario_dono && data.usuario_dono !== currentUser) {
+                    alert("Este código já foi resgatado por outro usuário.");
+                } else {
+                    // Vincula o usuário ao pagamento e ativa
+                    await update(ref(db, 'users/' + currentUser), { isPremium: true });
+                    await update(paymentRef, { 
+                        usuario_dono: currentUser,
+                        data_ativacao: new Date().toISOString()
+                    });
+                    
+                    alert("🎉 PREMIUM ATIVADO COM SUCESSO!");
+                    location.reload();
+                }
+            } else {
+                alert("O pagamento consta no sistema, mas ainda não foi aprovado pelo PagSeguro. Aguarde alguns instantes.");
+            }
+        } else {
+            alert("Código não encontrado. Certifique-se de que o pagamento foi concluído ou aguarde 2 minutos para o sistema processar.");
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Erro ao verificar. Tente novamente mais tarde.");
+    } finally {
+        document.getElementById('global-loader').style.display = 'none';
+    }
+};
+		
+
+		window.onload = async () => {
+			// 1. Verifica se o usuário está logado (Sua lógica de login existente)
+			// ... seu código de recuperar login ...
+
+			// 2. Captura o ID do PagSeguro direto da URL do GitHub
+			const urlParams = new URLSearchParams(window.location.search);
+			const tid = urlParams.get('transaction_id') || urlParams.get('id_res') || urlParams.get('code');
+
+			if (tid && currentUser) {
+				console.log("💎 Transação detectada! Validando: " + tid);
+				
+				const { ref, get, update } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+				const paymentRef = ref(db, 'pagamentos_confirmados/' + tid);
+				
+				const snapshot = await get(paymentRef);
+				if (snapshot.exists() && snapshot.val().confirmado) {
+					const data = snapshot.val();
+					
+					// Se já tiver dono e não for você, bloqueia
+					if (data.usuario_dono && data.usuario_dono !== currentUser) {
+						alert("❌ Este pagamento já pertence a outra conta.");
+					} else {
+						// ATIVAÇÃO DIRETA (Sem ponte!)
+						await update(ref(db, 'users/' + currentUser), { isPremium: true });
+						await update(paymentRef, { usuario_dono: currentUser });
+						
+						alert("🎉 PARABÉNS! SEU PREMIUM FOI ATIVADO!");
+						// Limpa a URL
+						window.history.pushState({}, '', window.location.origin + window.location.pathname);
+						location.reload();
+					}
+				}
+			}
+		};
+
+
+        // CONTROLES DO MODAL (NOVO)
+        window.openLoginModal = () => {
+            document.getElementById('login-modal-overlay').style.display = 'flex';
+            setTimeout(() => document.getElementById('login-modal-overlay').classList.add('show'), 10);
+        };
+        
+        window.closeLoginModal = () => {
+            document.getElementById('login-modal-overlay').classList.remove('show');
+            setTimeout(() => document.getElementById('login-modal-overlay').style.display = 'none', 300);
+        };
+
+        function generateCaptcha() {
+            const n1 = Math.floor(Math.random() * 10) + 1;
+            const n2 = Math.floor(Math.random() * 10) + 1;
+            captchaAnswer = n1 + n2;
+            document.getElementById('captcha-quest').innerText = `${n1} + ${n2}`;
+        }
+
+        window.handleLogin = async () => {
+    const user = document.getElementById('l-user').value.toLowerCase().replace(/\s/g,'');
+    const pass = document.getElementById('l-pass').value;
+    const captchaInput = document.getElementById('l-captcha').value;
+    const captchaCont = document.getElementById('captcha-container');
+
+    // Se estiver tentando logar manualmente e não preencheu senha
+    if((!user || !pass) && document.getElementById('view-landing').style.display === 'none') {
+         return alert("Preencha usuário e senha");
+    }
+
+    document.getElementById('global-loader').style.display = 'flex';
+    
+    try {
+        const snapshot = await get(child(ref(db), `users/${user}`));
+        
+        // Elementos de interface
+        const btnSide = document.getElementById('sidebar-btn-publish');
+        const freeDiv = document.getElementById('pub-free-only');
+        const premiumDiv = document.getElementById('pub-premium-only');
+
+        if(snapshot.exists()) {
+            const val = snapshot.val();
+            // Verifica senha apenas se não for login automático (que já vem validado)
+            if(val.pass !== pass) {
+                document.getElementById('global-loader').style.display = 'none';
+                return alert("Senha errada");
+            }
+            if(val.draft) data = { ...data, ...val.draft };
+            if(val.publicId) {
+                currentPublicId = val.publicId;
+                setupPublishedState(val.publicId);
+            }
+
+            // --- ATUALIZAÇÃO VISUAL (PREMIUM vs FREE) ---
+            if (val.isPremium || user === "admin") {
+                if(btnSide) { btnSide.style.background = "#10b981"; btnSide.innerHTML = '<i class="fas fa-globe"></i> <span>PUBLICAR</span>'; }
+                if(freeDiv) freeDiv.style.display = 'none';
+                if(premiumDiv) premiumDiv.style.display = 'block';
+            } else {
+                if(btnSide) { btnSide.style.background = "#f59e0b"; btnSide.innerHTML = '<i class="fas fa-crown"></i> <span>ATIVAR PREMIUM</span>'; }
+                if(freeDiv) freeDiv.style.display = 'block';
+                if(premiumDiv) premiumDiv.style.display = 'none';
+            }
+        } 
+        else {
+            // ... (Lógica de criar conta nova mantida igual) ...
+            if(captchaCont.style.display !== 'block') {
+                document.getElementById('global-loader').style.display = 'none';
+                captchaCont.style.display = 'block';
+                generateCaptcha();
+                return showToast("Prove que você é humano respondendo o desafio.", "success");
+            }
+            if(parseInt(captchaInput) !== captchaAnswer) {
+                document.getElementById('global-loader').style.display = 'none';
+                generateCaptcha();
+                return showToast("Resultado incorreto.", "error");
+            }
+            await set(ref(db, `users/${user}`), { pass, created: Date.now(), isPremium: false });
+        }
+
+        // --- SUCESSO DO LOGIN ---
+        currentUser = user;
+        localStorage.setItem('mem_admin', JSON.stringify({user,pass}));
+        document.getElementById('user-display').innerText = user;
+        
+        document.getElementById('view-landing').style.display = 'none';
+        closeLoginModal();
+        document.getElementById('view-dashboard').style.display = 'block';
+        document.getElementById('global-loader').style.display = 'none';
+        
+        if(user === "admin") document.getElementById('admin-backup-card').style.display = 'block';
+
+        initEditor();
+        
+        // 🔥 O PULO DO GATO ESTÁ AQUI EMBAIXO 🔥
+        // Agora que TEMOS CERTEZA que 'currentUser' existe, chamamos a verificação:
+        setTimeout(() => {
+             window.checkPaymentReturn();
+        }, 500); // Dá meio segundinho só para garantir que o Firebase está pronto
+
+    } catch(e) { 
+        document.getElementById('global-loader').style.display = 'none'; 
+        console.error(e);
+        // alert("Erro conexão: " + e.message); // Comentado para não assustar em logins automáticos
+    }
+};
+
+window.checkPaymentReturn = () => {
+    const params = new URLSearchParams(window.location.search);
+    const idTransacao = params.get('transaction_id') || params.get('code');
+
+    // Só prossegue se houver ID de transação e o usuário estiver logado
+    if (!idTransacao || !currentUser) return;
+
+    import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js").then((m) => {
+        const paymentRef = m.ref(db, 'pagamentos_confirmados/' + idTransacao);
+        
+        m.get(paymentRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const paymentData = snapshot.val();
+                
+                // TRAVA DE SEGURANÇA: Se já existir um 'usuario_dono' e não for você, impede a ativação
+                if (paymentData.usuario_dono && paymentData.usuario_dono !== currentUser) {
+                    alert("❌ Este link de pagamento já foi utilizado por outra conta.");
+                    const novaUrl = window.location.origin + window.location.pathname;
+                    window.history.pushState({}, '', novaUrl);
+                    return;
+                }
+
+                // VALIDAÇÃO: Se o pagamento estiver confirmado no Firebase
+                if (paymentData.confirmado === true) {
+                    const userRef = m.ref(db, 'users/' + currentUser);
+                    
+                    // 1. Ativa o Premium na conta do usuário
+                    m.update(userRef, { isPremium: true }).then(() => {
+                        
+                        // 2. Marca o nome do usuário como dono do pagamento no Firebase
+                        m.update(paymentRef, { 
+                            usuario_dono: currentUser,
+                            data_ativacao: new Date().toISOString()
+                        });
+
+                        window.liberarInterfacePremium(); 
+                        alert("🎉 PREMIUM ATIVADO COM SUCESSO!");
+                        
+                        // Limpa a URL para o código não ficar exposto
+                        const novaUrl = window.location.origin + window.location.pathname;
+                        window.history.pushState({}, '', novaUrl);
+                    });
+                }
+            }
+        });
+    });
+};
+
+window.ativarPremiumUsuario = () => {
+    if (!currentUser) return;
+
+    // 1. Atualiza no Banco de Dados (Firebase)
+    const userRef = ref(db, 'users/' + currentUser);
+    update(userRef, { 
+        isPremium: true,
+        data_confirmacao: new Date().toISOString()
+    }).then(() => {
+        
+        // 2. ATUALIZA A TELA NA HORA (Sem recarregar!)
+        alert("🎉 PARABÉNS! SEU PLANO PREMIUM FOI ATIVADO!\n\nAgora você pode clicar no botão VERDE 'PUBLICAR' para gerar seu link.");
+
+        // Muda os botões visualmente agora mesmo
+        const btnSide = document.getElementById('sidebar-btn-publish');
+        const freeDiv = document.getElementById('pub-free-only');
+        const premiumDiv = document.getElementById('pub-premium-only');
+
+        if(btnSide) { 
+            btnSide.style.background = "#10b981"; 
+            btnSide.innerHTML = '<i class="fas fa-globe"></i> <span>PUBLICAR</span>'; 
+        }
+        if(freeDiv) freeDiv.style.display = 'none';
+        if(premiumDiv) premiumDiv.style.display = 'block';
+
+        // 3. Limpa a URL para ficar bonita (tira o código gigante) sem recarregar
+        const novaURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:novaURL},'',novaURL);
+
+    }).catch((e) => {
+        alert("Erro ao salvar premium: " + e.message);
+    });
+};
+
+// --- FUNÇÃO DE ATIVAÇÃO BLINDADA (SEM ROUBO DE LINK) ---
+// VERSÃO CORRIGIDA E SIMPLIFICADA
+async function executarPublicacaoAutomatica(tId) {
+    if (!currentUser) {
+        console.log("Aguardando login para validar...");
+        return;
+    }
+
+    try {
+        const { ref, get, update } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+
+        const paymentRef = ref(db, `pagamentos_confirmados/${tId}`);
+        const snapshot = await get(paymentRef);
+
+        if (snapshot.exists()) {
+            const paymentData = snapshot.val();
+
+            // 🛑 TRAVA 1: Se já tiver um dono e não for você, PARA TUDO.
+            if (paymentData.usuario_dono && paymentData.usuario_dono !== currentUser) {
+                const novaURL = window.location.origin + window.location.pathname;
+                window.history.pushState({}, '', novaURL);
+                return; // O return aqui impede que o código continue e ative o premium
+            }
+
+            // ✅ VALIDAÇÃO: Se estiver confirmado E (não tem dono OU o dono é você)
+            if (paymentData.confirmado === true) {
+                
+                // 1. Atualiza o usuário para Premium no banco
+                const userRef = ref(db, `users/${currentUser}`);
+                await update(userRef, { isPremium: true });
+
+                // 2. Marca você como dono no registro do pagamento para ninguém mais usar
+                await update(paymentRef, { 
+                    usuario_dono: currentUser,
+                    data_ativacao: new Date().toISOString()
+                });
+
+                // 3. Só agora libera a interface visual
+                liberarInterfacePremium();
+                
+                const novaURL = window.location.origin + window.location.pathname;
+                window.history.pushState({}, '', novaURL);
+
+                alert("🎉 PARABÉNS! SEU PREMIUM FOI ATIVADO!");
+            }
+        } else {
+            console.log("Pagamento ainda não registrado no banco.");
+        }
+    } catch (error) {
+        console.error("Erro detalhado na ativação:", error);
+    }
+}
+
+        // Função auxiliar visual (garante que os botões mudem de cor)
+        function liberarInterfacePremium() {
+            const btnSide = document.getElementById('sidebar-btn-publish');
+            const freeDiv = document.getElementById('pub-free-only');
+            const premiumDiv = document.getElementById('pub-premium-only');
+            const lockCard = document.getElementById('c-publish'); // O card de publicação
+
+            // Muda o botão lateral para VERDE
+            if(btnSide) { 
+                btnSide.style.display = 'flex';
+                btnSide.style.background = "#10b981"; 
+                btnSide.innerHTML = '<i class="fas fa-globe"></i> <span>PUBLICAR</span>'; 
+            }
+
+            // Esconde a área de pagamento e mostra a de publicação
+            if(freeDiv) freeDiv.style.display = 'none';
+            if(premiumDiv) premiumDiv.style.display = 'block';
+            
+            // Muda a borda do card para verde (visual de sucesso)
+            if(lockCard) {
+                lockCard.style.border = "2px solid #10b981";
+                lockCard.style.background = "#f0fdf4";
+                lockCard.querySelector('h4').style.color = "#047857";
+            }
+        }
+		
+		// FUNÇÃO NOVA: Admin ver todas as fotos
+        window.adminViewAllPhotos = async () => {
+            if(currentUser !== "admin") return; // Segurança extra
+            
+            document.getElementById('global-loader').style.display = 'flex';
+            
+            try {
+                // 1. Baixa todos os presentes publicados
+                const snapshot = await get(ref(db, 'gifts'));
+                
+                if(!snapshot.exists()) {
+                    document.getElementById('global-loader').style.display = 'none';
+                    return alert("Nenhum presente encontrado.");
+                }
+
+                const allGifts = snapshot.val();
+                let allImages = [];
+
+                // 2. Varre cada presente procurando links de fotos
+                Object.values(allGifts).forEach(gift => {
+                    // Pega fotos do Slider
+                    if(gift.slider && Array.isArray(gift.slider)) {
+                        gift.slider.forEach(url => {
+                            if(url && url.startsWith('http')) allImages.push(url);
+                        });
+                    }
+                    // Pega fotos da Galeria
+                    if(gift.gallery && Array.isArray(gift.gallery)) {
+                        gift.gallery.forEach(url => {
+                            if(url && url.startsWith('http')) allImages.push(url);
+                        });
+                    }
+                });
+
+                // 3. Mostra o resultado (Vamos usar o Modal de Cartinha improvisado para exibir)
+                if(allImages.length === 0) {
+                     alert("Nenhuma foto encontrada nos presentes.");
+                } else {
+                    // Cria um HTML com todas as imagens pequenas
+                    let htmlGaleria = `<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; max-height:400px; overflow-y:auto;">`;
+                    allImages.forEach(url => {
+                        htmlGaleria += `<a href="${url}" target="_blank"><img src="${url}" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:4px; border:1px solid #ccc;"></a>`;
+                    });
+                    htmlGaleria += `</div><p style="margin-top:10px; font-size:0.8rem;">Total: ${allImages.length} fotos encontradas.</p>`;
+
+                    // Abre o modal
+                    document.getElementById('custom-alert-msg').innerHTML = `<h3 style='margin-bottom:15px'>Galeria Global</h3>` + htmlGaleria;
+                    document.getElementById('custom-alert-overlay').style.display = 'flex';
+                }
+
+            } catch(e) {
+                alert("Erro ao buscar fotos: " + e.message);
+            }
+            
+            document.getElementById('global-loader').style.display = 'none';
+        };
+
+        function setupPublishedState(pid) {
+			// Esconde o botão de publicar antigo e o input
+			const sidebarPublish = document.getElementById('sidebar-btn-publish');
+			const cardPublish = document.getElementById('c-publish');
+			if(sidebarPublish) sidebarPublish.style.display = 'none';
+			if(cardPublish) cardPublish.style.display = 'none';
+			
+			// Mostra o novo card organizado
+			document.getElementById('c-link-share').style.display = 'block';
+			
+			// Gera a URL final
+			const finalUrl = window.location.origin + window.location.pathname + '?id=' + pid;
+			document.getElementById('final-link-text').innerText = finalUrl;
+			
+			// Mostra o botão flutuante de ver presente
+			document.getElementById('btn-view-real').style.display = 'flex';
+			
+			// Gera o QR Code visualmente
+			window.generateQRCode(finalUrl);
+		}
+
+        function initEditor() {
+            if(!data.slider) data.slider=[];
+            if(!data.gallery) data.gallery=[];
+            if(!data.timeline) data.timeline=[];
+
+            document.getElementById('inp-n1').value = data.n1||"";
+            document.getElementById('inp-n2').value = data.n2||"";
+            document.getElementById('inp-date').value = data.date||"";
+            document.getElementById('inp-msg').value = data.msg||"";
+            document.getElementById('inp-music').value = data.music||"";
+            document.getElementById('inp-theme').value = data.theme||"t-classic";
+            document.getElementById('inp-final').value = data.final||"";
+            document.getElementById('inp-emojis').value = data.emojis||"❤️✨";
+            
+            document.getElementById('inp-btn-msg').value = data.btnMsg||"";
+            document.getElementById('inp-btn-link').value = data.btnLink||"";
+            
+            renderGrid('grid-slider', data.slider, 'slider');
+            renderGrid('grid-gallery', data.gallery, 'gallery');
+            renderTimelineEditor(); 
+            updatePreview();
+        }
+
+        window.addTimelineMoment = () => {
+            data.timeline.push({ date: "", title: "", desc: "" });
+            renderTimelineEditor();
+            updatePreview();
+        }
+
+        window.removeTimelineMoment = (index) => {
+            data.timeline.splice(index, 1);
+            renderTimelineEditor();
+            updatePreview();
+        }
+
+        window.updateTimelineItem = (index, field, val) => {
+            data.timeline[index][field] = val;
+            updatePreview();
+        }
+
+        function renderTimelineEditor() {
+            const container = document.getElementById('timeline-editor-list');
+            container.innerHTML = "";
+            data.timeline.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = "timeline-editor-item";
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <strong>Momento ${i+1}</strong>
+                        <button class="btn btn-danger btn-sm" onclick="removeTimelineMoment(${i})"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <input type="date" class="inp" style="margin-bottom:5px; padding:8px;" value="${item.date}" oninput="updateTimelineItem(${i}, 'date', this.value)">
+                    <input type="text" class="inp" style="margin-bottom:5px; padding:8px;" placeholder="Título (ex: Onde nos conhecemos)" value="${item.title}" oninput="updateTimelineItem(${i}, 'title', this.value)">
+                    <textarea class="inp" style="margin-bottom:0; padding:8px;" rows="2" placeholder="Descrição curta..." oninput="updateTimelineItem(${i}, 'desc', this.value)">${item.desc}</textarea>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.selectMusicFromList = (val) => { 
+            if(val) { 
+                document.getElementById('inp-music').value = val; 
+                updatePreview(); 
+            } 
+        };
+        
+        window.previewAudio = () => {
+            const url = document.getElementById('inp-music').value;
+            const player = document.getElementById('preview-player');
+            if(!url) return alert("Selecione uma música primeiro!");
+            
+            if(!player.paused && !player.ended) {
+                player.pause();
+            } else {
+                player.src = url;
+                player.play();
+            }
+        };
+
+        window.renderGrid = (elId, arr, type) => {
+            const c = document.getElementById(elId); 
+            c.innerHTML="";
+            
+            for(let i=0; i<4; i++) {
+                const url = arr[i]; 
+                const div = document.createElement('div'); 
+                div.className="photo-slot";
+                
+                if(url === 'loading') {
+                    div.innerHTML='<div class="spinner" style="width:20px;height:20px;border-width:2px;"></div>';
+                } else if(url) {
+                    div.innerHTML=`<img src="${url}">`;
+                } else {
+                    div.innerHTML='<i class="fas fa-plus"></i>';
+                }
+                
+                const inp = document.createElement('input'); 
+                inp.type="file"; 
+                inp.accept="image/*"; 
+                inp.style.display="none";
+                inp.onchange=(e)=>uploadImage(e.target.files[0], type, i);
+                
+                div.onclick=()=>inp.click(); 
+                div.appendChild(inp); 
+                c.appendChild(div);
+            }
+        }
+
+        async function uploadImage(file, type, index) {
+            if(!file)return;
+            if(!data[type]) data[type] = [];
+            
+            data[type][index]='loading'; 
+            renderGrid(type==='slider'?'grid-slider':'grid-gallery', data[type], type);
+            
+            const fd = new FormData(); fd.append("image",file);
+            try {
+                const req = await fetch(`https://api.imgbb.com/1/upload?key=${sysToken}`,{method:"POST",body:fd});
+                const res = await req.json();
+                if(res.success) data[type][index]=res.data.url; else data[type][index]=null;
+            } catch(e) { data[type][index]=null; }
+            
+            renderGrid(type==='slider'?'grid-slider':'grid-gallery', data[type], type); 
+            updatePreview();
+        }
+		
+		window.baixarPresenteOffline = async () => {
+    // 1. Verificação de Segurança (Plano Premium)
+    if (!currentUser) return alert("Você precisa estar logado para baixar.");
+    
+    document.getElementById('global-loader').style.display = 'flex';
+    
+    try {
+        // Consultamos o banco de dados em tempo real para confirmar o status
+        const userSnap = await get(child(ref(db), `users/${currentUser}`));
+        const userData = userSnap.val();
+
+        // Se não for premium e não for o admin, bloqueia o download
+        if (!userData.isPremium && currentUser !== "admin") {
+			document.getElementById('global-loader').style.display = 'none';
+			
+			// Mostra o brinde de erro com ícone de coroa
+			showToast("Este recurso exige o Plano Premium", "error");
+			
+			return;
+		}
+
+        // 2. Verificação de conteúdo preenchido
+        if (!data.n1 && !data.n2) {
+            document.getElementById('global-loader').style.display = 'none';
+            return alert("Preencha as informações do presente antes de baixar!");
+        }
+
+        showToast("Eternizando presente... Isso pode levar alguns segundos.");
+
+        // 3. Processo de conversão para Base64 (Suas fotos offline)
+        const dadosOffline = JSON.parse(JSON.stringify(data));
+        const toBase64 = async (url) => {
+            if (!url || url === 'loading' || url.startsWith('data:')) return url;
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+            } catch (e) { return url; }
+        };
+
+        if (dadosOffline.slider) {
+            for (let i = 0; i < dadosOffline.slider.length; i++) {
+                dadosOffline.slider[i] = await toBase64(dadosOffline.slider[i]);
+            }
+        }
+        if (dadosOffline.gallery) {
+            for (let i = 0; i < dadosOffline.gallery.length; i++) {
+                dadosOffline.gallery[i] = await toBase64(dadosOffline.gallery[i]);
+            }
+        }
+
+        // 4. Captura de Estilos e Geração do HTML (Mantendo sua estrutura)
+        const todosEstilos = Array.from(document.styleSheets).map(sheet => {
+            try { return Array.from(sheet.cssRules).map(r => r.cssText).join(""); } catch (e) { return ""; }
+        }).join("");
+
+        const mioloPresente = generateHTML(dadosOffline);
+
+        const htmlFinal = `
+        <!DOCTYPE html>
+        <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <title>Nosso Presente Eterno</title>
+            <style>
+                ${todosEstilos}
+                body { margin: 0; background: #000; color: #fff; overflow-x: hidden; width: 100%; position: relative; }
+                #start-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2147483647; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+                #fab-off { position: fixed !important; bottom: 20px !important; right: 20px !important; width: 60px !important; height: 60px !important; z-index: 99999999 !important; display: none; cursor: pointer; border-radius: 50%; background: radial-gradient(circle, #ff4757 25%, #111 26%, #111 28%, #222 29%, #111 32%, #111 45%, #222 46%, #111 48%, #111 100%); box-shadow: 0 4px 15px rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+                #fab-off.playing { animation: spinVinyl 4s linear infinite; }
+                #fab-off svg { width: 25px; height: 25px; fill: white; pointer-events: none; }
+                @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
+                .rain-item { position: fixed; pointer-events: none; z-index: 9999; top: -50px; font-size: 24px; animation: fall linear forwards; }
+                @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+                #custom-alert-offline { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000000; display:none; align-items:center; justify-content:center; padding: 20px; }
+                .letter-box { background: #fffaf0; color: #4a4a4a; border-radius: 5px; padding: 40px; text-align: center; max-width: 500px; width:100%; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: openLetterAnim 0.6s ease-out; font-family: 'Indie Flower', cursive; border: 2px dashed #d4af37; }
+                .letter-icon { font-size: 3rem; margin-bottom: 20px; }
+                .letter-text { font-size: 1.4rem; line-height: 1.6; margin-bottom: 30px; white-space: pre-wrap; font-weight: 600; }
+                @keyframes openLetterAnim { from{transform:translateY(100px) scale(0.5); opacity:0} to{transform:translateY(0) scale(1); opacity:1} }
+            </style>
+        </head>
+        <body>
+            <div id="start-overlay">
+                <h1 style="font-family:'Great Vibes'; font-size: 3rem; color: #ffccd5; margin-bottom: 20px;">Uma Surpresa...</h1>
+                <button onclick="iniciarExperiencia()" style="padding: 15px 40px; background: transparent; border: 2px solid #fff; color: #fff; border-radius: 50px; cursor: pointer; font-size: 1.2rem; text-transform: uppercase;">Abrir Agora ❤️</button>
+            </div>
+            <div id="custom-alert-offline" onclick="this.style.display='none'">
+                <div class="letter-box" onclick="event.stopPropagation()">
+                    <div class="letter-icon">💌</div>
+                    <div id="offline-msg-content" class="letter-text"></div>
+                    <button onclick="document.getElementById('custom-alert-offline').style.display='none'" style="padding:10px 30px; background:#E91E63; color:white; border:none; border-radius:50px; cursor:pointer; font-family:'Inter', sans-serif; font-weight:bold;">Fechar com Amor ❤️</button>
+                </div>
+            </div>
+            <audio id="music-player" loop src="${dadosOffline.music}"></audio>
+            <div id="fab-off" onclick="toggleMestre()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div>
+            <div id="gift-content" style="opacity:0; transition: opacity 1s;">${mioloPresente}</div>
+            <script>
+                window.openLetter = function(encodedMsg) {
+                    document.getElementById('offline-msg-content').innerText = decodeURIComponent(encodedMsg);
+                    document.getElementById('custom-alert-offline').style.display = 'flex';
+                };
+                let autoScrollActive = false;
+                const audio = document.getElementById('music-player');
+                const fab = document.getElementById('fab-off');
+                function iniciarExperiencia() {
+                    document.getElementById('start-overlay').style.display = 'none';
+                    document.getElementById('gift-content').style.opacity = '1';
+                    fab.style.display = 'flex';
+                    fab.classList.add('playing');
+                    audio.play().catch(e => console.log(e));
+                    const emojis = ${JSON.stringify(dadosOffline.emojis.split(''))};
+                    setInterval(() => {
+                        if(!autoScrollActive) return;
+                        const el = document.createElement('div');
+                        el.className = 'rain-item';
+                        el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                        el.style.left = Math.random() * 95 + 'vw';
+                        el.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                        document.body.appendChild(el);
+                        setTimeout(() => el.remove(), 5000);
+                    }, 600);
+                    autoScrollActive = true;
+                    setTimeout(scrollInfinito, 2000);
+                }
+                function scrollInfinito() {
+                    if(!autoScrollActive) return;
+                    window.scrollBy(0, 1);
+                    if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight - 5) {
+                        setTimeout(scrollInfinito, 40);
+                    }
+                }
+                window.toggleMestre = function() {
+                    if (audio.paused) {
+                        audio.play();
+                        fab.classList.add('playing');
+                        autoScrollActive = true;
+                        scrollInfinito();
+                    } else {
+                        audio.pause();
+                        fab.classList.remove('playing');
+                        autoScrollActive = false;
+                    }
+                };
+                window.addEventListener('wheel', () => { autoScrollActive = false; fab.classList.remove('playing'); });
+                window.addEventListener('touchstart', () => { autoScrollActive = false; fab.classList.remove('playing'); });
+                setInterval(() => {
+                    const diff = new Date().getTime() - new Date("${dadosOffline.date}").getTime();
+                    if(diff > 0) {
+                        document.querySelectorAll('#d').forEach(el => el.innerText = Math.floor(diff/(1000*60*60*24)));
+                        document.querySelectorAll('#h').forEach(el => el.innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60)));
+                        document.querySelectorAll('#m').forEach(el => el.innerText = Math.floor((diff%(1000*60*60))/(1000*60)));
+                        document.querySelectorAll('#s').forEach(el => el.innerText = Math.floor((diff%(1000*60))/1000));
+                    }
+                }, 1000);
+                setInterval(() => {
+                    document.querySelectorAll('.g-slider').forEach(s => {
+                        const slides = s.querySelectorAll('.g-slide');
+                        if(slides.length < 2) return;
+                        let active = s.querySelector('.active') || slides[0];
+                        let next = active.nextElementSibling || slides[0];
+                        active.classList.remove('active');
+                        next.classList.add('active');
+                    });
+                }, 3000);
+            <\/script>
+        </body>
+        </html>`;
+
+        const blob = new Blob([htmlFinal], { type: 'text/html' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = "nosso-presente.html";
+        link.click();
+        
+    } catch (err) {
+        console.error(err);
+        alert("Ocorreu um erro ao verificar seu plano. Tente novamente.");
+    } finally {
+        document.getElementById('global-loader').style.display = 'none';
+    }
+};
+
+        window.saveData = async () => {
+            updateDataObj();
+            const updates = {};
+            updates[`users/${currentUser}/draft`] = data;
+            if(currentPublicId) {
+                data.owner = currentUser;
+                updates[`gifts/${currentPublicId}`] = data;
+            }
+            try { await update(ref(db), updates); showToast("Salvo!"); } 
+            catch(e) { alert("Erro ao salvar: " + e.message); }
+        };
+
+        window.publishGift = async () => {
+    // 1. Verificar no banco de dados se o usuário é Premium
+    const userSnap = await get(child(ref(db), `users/${currentUser}`));
+    const userData = userSnap.val();
+
+    // Se não for premium e não for admin, bloqueia e oferece o link
+    if (!userData.isPremium && currentUser !== "admin") {
+        const confirmar = confirm("A publicação requer o Plano Premium (R$ 9,90). Deseja ir para o pagamento agora?");
+        if (confirmar) {
+            window.location.href = "https://pagamento.pagbank.com.br/pagamento?code=de927a34-795b-476b-8b0d-197f5ae22424&t=ce388e3a-12b0-431b-a106-6f44295a09a7";
+        }
+        return;
+    }
+
+    // 2. Se for premium, prossegue com a publicação normal
+    updateDataObj();
+    const pid = document.getElementById('inp-public-id').value.trim().toLowerCase().replace(/\s+/g, '-');
+    
+    if(pid.length < 3) return alert("Link curto");
+    
+    document.getElementById('global-loader').style.display = 'flex';
+    
+    try {
+        const check = await get(child(ref(db), `gifts/${pid}`));
+        if(check.exists() && check.val().owner !== currentUser) {
+            document.getElementById('global-loader').style.display = 'none'; 
+            return alert("Link indisponível");
+        }
+        
+        data.owner = currentUser;
+        const updates = {};
+        updates[`gifts/${pid}`] = data;
+        updates[`users/${currentUser}/draft`] = data;
+        updates[`users/${currentUser}/publicId`] = pid;
+        
+        await update(ref(db), updates);
+        
+        currentPublicId = pid;
+        setupPublishedState(pid);
+        showToast("Presente Publicado com Sucesso!");
+        document.getElementById('global-loader').style.display = 'none';
+    } catch(e) { 
+        alert(e.message); 
+        document.getElementById('global-loader').style.display = 'none'; 
+    }
+};
+
+        window.copyLink = () => {
+            navigator.clipboard.writeText(document.getElementById('final-link-text').innerText).then(()=>showToast("Copiado!"));
+        };
+
+        window.openGiftUrl = () => { if(currentPublicId) window.open(`?id=${currentPublicId}`,'_blank'); };
+
+        function updateDataObj() {
+            data.n1 = document.getElementById('inp-n1').value;
+            data.n2 = document.getElementById('inp-n2').value;
+            data.date = document.getElementById('inp-date').value;
+            data.msg = document.getElementById('inp-msg').value;
+            data.music = document.getElementById('inp-music').value;
+            data.theme = document.getElementById('inp-theme').value;
+            data.final = document.getElementById('inp-final').value;
+            data.emojis = document.getElementById('inp-emojis').value || "❤️✨";
+            data.btnMsg = document.getElementById('inp-btn-msg').value;
+            data.btnLink = document.getElementById('inp-btn-link').value;
+        }
+
+        window.updatePreview = () => { 
+            updateDataObj(); 
+            const html = generateHTML(data);
+            
+            const desktopPreview = document.getElementById('preview-screen');
+            if(desktopPreview) {
+                desktopPreview.innerHTML = html;
+                startRain(data.emojis || "❤️✨", 'preview-screen');
+            }
+            
+            const mobilePreview = document.getElementById('preview-screen-mobile');
+            if(mobilePreview) {
+                mobilePreview.innerHTML = html;
+                startRain(data.emojis || "❤️✨", 'preview-screen-mobile');
+            }
+        };
+        
+        window.addEmoji = (char) => { document.getElementById('inp-emojis').value += char; updatePreview(); };
+
+        window.openLetter = (msgEncoded) => {
+            const msg = decodeURIComponent(msgEncoded);
+            document.getElementById('custom-alert-msg').innerText = msg;
+            document.getElementById('custom-alert-overlay').style.display = 'flex';
+        };
+        window.closeCustomAlert = () => {
+            document.getElementById('custom-alert-overlay').style.display = 'none';
+        };
+
+        function generateHTML(d) {
+            let slidesHtml = "";
+            let hasSlide = false;
+            if(d.slider) {
+                d.slider.forEach(img => {
+                    if(img && img !== 'loading') { slidesHtml += `<img class="g-slide ${!hasSlide?'active':''}" src="${img}">`; hasSlide = true; }
+                });
+            }
+            if(!slidesHtml) slidesHtml = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;">Adicione fotos</div>`;
+            
+            let galleryHtml = "";
+            if(d.gallery) {
+                d.gallery.forEach(img => { if(img && img!=='loading') galleryHtml += `<img src="${img}">`; });
+            }
+
+            let timelineHtml = "";
+            if(d.timeline && d.timeline.length > 0) {
+                d.timeline.forEach(item => {
+                    let dStr = item.date;
+                    if(dStr) { const p=dStr.split('-'); dStr=`${p[2]}/${p[1]}/${p[0]}`; }
+                    timelineHtml += `
+                        <div class="tl-item">
+                            <span class="tl-date">${dStr || 'Data'}</span>
+                            <div class="tl-title">${item.title || 'Momento'}</div>
+                            <div class="tl-desc">${item.desc || ''}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            let dateStr = "Selecione uma data";
+            let fullDateStr = "";
+            if(d.date) { 
+				const p = d.date.split('-'); 
+				dateStr = `${p[2]}/${p[1]}/${p[0]}`;
+				const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+				
+				// Ajuste aqui: adicionamos um span com estilo de fonte menor e margem superior
+				fullDateStr = `
+					<div style="margin-top: 15px; line-height: 1.4;">
+						<span style="font-size: 0.85rem; opacity: 0.8; font-family: 'Inter', sans-serif; font-weight: 400;">
+							Começamos a escrever nossa história em ${p[2]} de ${months[parseInt(p[1])-1]} de ${p[0]}
+						</span>
+					</div>`;
+			}
+
+            let finalBtnHtml = "";
+            if(d.btnMsg) {
+                const safeMsg = encodeURIComponent(d.btnLink || "Sem mensagem...");
+                finalBtnHtml = `<button onclick="openLetter('${safeMsg}')" class="final-btn">${d.btnMsg}</button>`;
+            }
+
+            let timerHtml = '';
+            if(d.theme === 't-classic' || d.theme === 't-neon-pink') {
+                timerHtml = `
+                    <div class="timer-title" style="font-size: 0.8rem; margin-bottom: 15px; letter-spacing: 1px; opacity: 0.9;">
+						Cada segundo com você conta
+					</div>
+                    <div class="g-counter-box">
+                        <div class="counter-grid">
+                            <div class="c-item"><span class="c-val" id="d">0</span><span class="c-lbl">DIAS</span></div>
+                            <div class="c-item"><span class="c-val" id="h">0</span><span class="c-lbl">HRS</span></div>
+                            <div class="c-item"><span class="c-val" id="m">0</span><span class="c-lbl">MIN</span></div>
+                            <div class="c-item"><span class="c-val" id="s">0</span><span class="c-lbl">SEG</span></div>
+                        </div>
+                        <p class="since-date-text">${fullDateStr}</p>
+                    </div>
+                `;
+            } else {
+                timerHtml = `
+                     <div class="g-counter-box">
+                        <div class="counter-grid">
+                            <div class="c-item"><span class="c-val" id="d">0</span><span class="c-lbl">DIAS</span></div>
+                            <div class="c-item"><span class="c-val" id="h">0</span><span class="c-lbl">HRS</span></div>
+                            <div class="c-item"><span class="c-val" id="m">0</span><span class="c-lbl">MIN</span></div>
+                            <div class="c-item"><span class="c-val" id="s">0</span><span class="c-lbl">SEG</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+            <style>
+                .final-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top:20px; }
+                .final-gallery img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); }
+            </style>
+            <div class="gift-container ${d.theme}">
+                <div class="gift-body">
+                    <h1 class="g-title">${d.n1} <i class="fas fa-heart heart-beat"></i> ${d.n2}</h1>
+                    <p class="g-date" style="opacity:0.8; margin-bottom:20px;">${dateStr}</p>
+                    <div class="g-slider" id="p-slider">${slidesHtml}</div>
+                    
+                    ${timerHtml}
+
+                    <div class="g-msg">${d.msg}</div>
+                    
+                    ${timelineHtml ? `<div class="timeline-container">${timelineHtml}</div>` : ''}
+
+                    <div class="final-gallery">${galleryHtml}</div>
+                    
+                    <p class="g-footer" style="margin-top:30px; opacity:0.6; font-size:0.8rem;">${d.final}</p>
+                    ${finalBtnHtml}                    
+                </div>
+            </div>`;
+        }
+
+        async function loadGift(id) {
+            document.getElementById('global-loader').style.display = 'flex';
+            try {
+                const snap = await get(child(ref(db), `gifts/${id}`));
+                if(snap.exists()) {
+                    const gd = snap.val();
+                    data = gd; 
+                    if(!gd.slider) gd.slider=[]; 
+                    if(!gd.gallery) gd.gallery=[];
+                    if(!gd.timeline) gd.timeline=[];
+                    if(!gd.btnMsg) gd.btnMsg=""; 
+                    if(!gd.btnLink) gd.btnLink="";
+                    
+                    document.getElementById('final-content').innerHTML = generateHTML(gd);
+                    document.getElementById('view-gift').style.display = 'block';
+                    document.getElementById('gift-overlay').style.display = 'flex';
+                    if(gd.music) { const aud=document.getElementById('audio-player'); aud.src=gd.music; document.getElementById('music-fab').style.display='flex'; }
+                    if(gd.date) startTimer(gd.date);
+                    runSlider();
+                } else { alert("Link inválido"); window.location.href = window.location.pathname; }
+            } catch(e) { console.error(e); }
+            document.getElementById('global-loader').style.display = 'none';
+        }
+
+        window.startExperience = () => {
+            document.getElementById('gift-overlay').style.opacity = '0';
+            setTimeout(()=>document.getElementById('gift-overlay').style.display='none',800);
+            
+            document.getElementById('audio-player').play().catch(e=>console.log("Autoplay blocked"));
+            document.getElementById('music-fab').classList.add('spin-anim');
+            
+            const chars = data.emojis || "❤️✨";
+            startRain(chars, 'GLOBAL');
+
+            const sc = document.getElementById('view-gift');
+            
+            setTimeout(() => {
+                if(autoScrollInterval) clearInterval(autoScrollInterval);
+                autoScrollInterval = setInterval(() => {
+                    if(sc.scrollTop + sc.clientHeight >= sc.scrollHeight) {
+                        clearInterval(autoScrollInterval);
+                    } else {
+                        sc.scrollTop += 1; 
+                    }
+                }, 40);
+
+                setTimeout(() => {
+                    const stopScroll = () => { clearInterval(autoScrollInterval); };
+                    sc.addEventListener('touchstart', stopScroll);
+                    sc.addEventListener('wheel', stopScroll);
+                    sc.addEventListener('click', stopScroll);
+                }, 2000);
+            }, 1500); 
+        };
+
+        window.toggleAudio = () => {
+            const a=document.getElementById('audio-player');
+            const f=document.getElementById('music-fab');
+            if(a.paused) { a.play(); f.classList.add('spin-anim'); } else { a.pause(); f.classList.remove('spin-anim'); }
+        };
+
+        function startTimer(dateStr) {
+            const start = new Date(dateStr).getTime();
+            setInterval(() => {
+                const diff = new Date().getTime() - start;
+                if(diff>0) {
+                    const els = ['d','h','m','s'];
+                    els.forEach(id => {
+                        const all = document.querySelectorAll('#'+id);
+                        all.forEach(el => {
+                            if(id==='d') el.innerText = Math.floor(diff/(1000*60*60*24));
+                            if(id==='h') el.innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+                            if(id==='m') el.innerText = Math.floor((diff%(1000*60*60))/(1000*60));
+                            if(id==='s') el.innerText = Math.floor((diff%(1000*60))/1000);
+                        });
+                    });
+                }
+            }, 1000);
+        }
+
+        function runSlider() {
+            setInterval(() => {
+                const containers = document.querySelectorAll('.g-slider');
+                containers.forEach(container => {
+                    const slides = container.querySelectorAll('.g-slide');
+                    if(slides.length<2)return;
+                    let active = container.querySelector('.active');
+                    if(!active) active = slides[0];
+                    let next = active.nextElementSibling || slides[0];
+                    active.classList.remove('active'); next.classList.add('active');
+                });
+            }, 3000);
+        }
+
+        function startRain(chars, context) {
+    if (activeRainIntervals[context]) {
+        clearInterval(activeRainIntervals[context]);
+    }
+
+    const arr = Array.from(chars);
+    if (arr.length === 0) return;
+
+    const interval = setInterval(() => {
+        const container = (context === 'GLOBAL') ? document.body : document.getElementById(context);
+        if (!container) return;
+
+        // Limite de emojis na tela para não pesar
+        const currentItems = container.querySelectorAll('.rain-item');
+        if (currentItems.length > 20) return;
+
+        const div = document.createElement('div');
+        div.innerText = arr[Math.floor(Math.random() * arr.length)];
+        div.className = 'rain-item';
+        
+        // Posicionamento horizontal aleatório
+        div.style.left = Math.random() * 95 + '%';
+        
+        // Define a altura da queda baseada apenas na tela visível do celular (viewport)
+        // ou uma altura fixa, para não "perseguir" o final da página infinitamente
+        const fallHeight = (context === 'GLOBAL') ? window.innerHeight : container.offsetHeight;
+        div.style.setProperty('--fall-distance', (fallHeight + 50) + 'px');
+
+        const duration = Math.random() * 2 + 3;
+        div.style.animation = `fall ${duration}s linear forwards`;
+
+        // Se estiver no preview, o emoji deve seguir o scroll atual
+        if (context !== 'GLOBAL') {
+            div.style.top = container.scrollTop - 40 + 'px';
+        } else {
+            div.style.position = 'fixed'; // Na tela real, fixed resolve o bug de expandir a página
+            div.style.top = '-50px';
+        }
+
+        container.appendChild(div);
+
+        // Remove o emoji bem rápido após a queda para não acumular no DOM
+        setTimeout(() => {
+            if (div.parentNode) div.remove();
+        }, duration * 1000);
+
+    }, 600);
+
+    activeRainIntervals[context] = interval;
+}
+
+        const styleSheet = document.createElement("style");
+		styleSheet.innerText = `
+			@keyframes fall { 
+				to { 
+					/* O valor final será preenchido pelo JavaScript */
+					transform: translateY(var(--fall-distance)) rotate(360deg); 
+				} 
+			}
+		`;
+		document.head.appendChild(styleSheet);
+
+        window.logout = () => { localStorage.removeItem('mem_admin'); location.reload(); };
+
+        window.scrollToId = (id) => {
+            const el = document.getElementById(id);
+            const container = document.getElementById('editor-container');
+            if(el) {
+                if(window.innerWidth > 900) {
+                    const topPos = el.offsetTop - container.offsetTop - 20;
+                    container.scrollTo({ top: topPos, behavior: 'smooth' });
+                } else {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = el.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
+                }
+            }
+        };
+
+        function showToast(msg) { const t=document.getElementById('toast'); t.innerHTML=msg; t.className="show"; setTimeout(()=>t.className="",3000); }			
+			window.generateQRCode = (url) => {
+				const qrImg = document.getElementById('qr-code-img');
+				if (qrImg) {
+					// Usamos o serviço goqr.me que é gratuito e ilimitado
+					const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url)}`;
+					qrImg.src = qrUrl;
+				}
+		};
+
+		// Função para baixar o QR Code
+		window.downloadQRCode = async () => {
+			const qrImg = document.getElementById('qr-code-img');
+			if (!qrImg.src) return alert("Gere o QR Code primeiro!");
+			
+			try {
+				const response = await fetch(qrImg.src);
+				const blob = await response.blob();
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = `qrcode-memorylove.png`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			} catch (e) {
+				// Se o navegador bloquear o download automático por segurança (CORS)
+				window.open(qrImg.src, '_blank');
+				alert("Clique com o botão direito na imagem que abriu e escolha 'Salvar imagem como'.");
+			}
+		};
+    </script>
+	
+
+</body>
+</html> 
